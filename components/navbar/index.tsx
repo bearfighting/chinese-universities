@@ -13,7 +13,7 @@ import { usePathname } from "next/navigation";
 
 export default function Navbar() {
   const pathname = usePathname();
-  const isUniversitiesActive = pathname === "/universities";
+  const isUniversitiesActive = pathname.startsWith("/universities");
 
   return (
     <header className="sticky top-0 z-50 w-full border-b bg-background/80 backdrop-blur">
@@ -43,14 +43,16 @@ export default function Navbar() {
         </Link>
         <div className="flex items-center justify-between">
           <NavigationMenu>
-            <NavigationMenuList className="list-none flex gap-6">
+            <NavigationMenuList className="list-none flex gap-2">
               <NavigationMenuItem>
                 <NavigationMenuLink
                   asChild
                   active={isUniversitiesActive}
                   className={cn(
-                    "px-4 py-2 font-medium",
-                    isUniversitiesActive && "bg-muted text-foreground"
+                    "rounded-full border border-transparent px-4 py-2 font-medium transition-colors focus-visible:bg-muted focus-visible:text-foreground focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background",
+                    isUniversitiesActive
+                      ? "border-border bg-secondary text-foreground hover:bg-secondary"
+                      : "text-muted-foreground hover:border-border/60 hover:bg-muted hover:text-foreground"
                   )}
                 >
                   <Link

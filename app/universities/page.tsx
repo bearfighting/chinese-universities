@@ -18,7 +18,7 @@ const c9Universities = [
     city: "Beijing",
     slug: "peking-university",
     website: "https://www.pku.edu.cn",
-    logo: "/pekin.png",
+    logo: "/peking.png",
   },
   {
     name: "Tsinghua University",

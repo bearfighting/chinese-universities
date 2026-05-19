@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 
 import { Badge } from "@/components/ui/badge";
@@ -13,68 +14,77 @@ import {
 const c9Universities = [
   {
     name: "Peking University",
-    chineseName: "北京大学",
+    chineseName: "\u5317\u4eac\u5927\u5b66",
     city: "Beijing",
     slug: "peking-university",
     website: "https://www.pku.edu.cn",
+    logo: "/peking.png",
   },
   {
     name: "Tsinghua University",
-    chineseName: "清华大学",
+    chineseName: "\u6e05\u534e\u5927\u5b66",
     city: "Beijing",
     slug: "tsinghua-university",
     website: "https://www.tsinghua.edu.cn",
+    logo: "/tsinghua.png",
   },
   {
     name: "Fudan University",
-    chineseName: "复旦大学",
+    chineseName: "\u590d\u65e6\u5927\u5b66",
     city: "Shanghai",
     slug: "fudan-university",
     website: "https://www.fudan.edu.cn",
+    logo: "/fudan.png",
   },
   {
     name: "Shanghai Jiao Tong University",
-    chineseName: "上海交通大学",
+    chineseName: "\u4e0a\u6d77\u4ea4\u901a\u5927\u5b66",
     city: "Shanghai",
     slug: "shanghai-jiao-tong-university",
     website: "https://www.sjtu.edu.cn",
+    logo: "/shanghai-jiaotong.png",
   },
   {
     name: "Nanjing University",
-    chineseName: "南京大学",
+    chineseName: "\u5357\u4eac\u5927\u5b66",
     city: "Nanjing",
     slug: "nanjing-university",
     website: "https://www.nju.edu.cn",
+    logo: "/nanjing.png",
   },
   {
     name: "Zhejiang University",
-    chineseName: "浙江大学",
+    chineseName: "\u6d59\u6c5f\u5927\u5b66",
     city: "Hangzhou",
     slug: "zhejiang-university",
     website: "https://www.zju.edu.cn",
+    logo: "/zhejiang.png",
   },
   {
     name: "University of Science and Technology of China",
-    chineseName: "中国科学技术大学",
+    chineseName: "\u4e2d\u56fd\u79d1\u5b66\u6280\u672f\u5927\u5b66",
     city: "Hefei",
     slug: "university-of-science-and-technology-of-china",
     website: "https://www.ustc.edu.cn",
+    logo: "/ustc.png",
   },
   {
     name: "Xi'an Jiaotong University",
-    chineseName: "西安交通大学",
+    chineseName: "\u897f\u5b89\u4ea4\u901a\u5927\u5b66",
     city: "Xi'an",
     slug: "xian-jiaotong-university",
     website: "https://www.xjtu.edu.cn",
+    logo: "/xjtu.svg",
   },
   {
     name: "Harbin Institute of Technology",
-    chineseName: "哈尔滨工业大学",
+    chineseName: "\u54c8\u5c14\u6ee8\u5de5\u4e1a\u5927\u5b66",
     city: "Harbin",
     slug: "harbin-institute-of-technology",
     website: "https://www.hit.edu.cn",
+    logo: "/hit.svg",
   },
-];
+] as const;
 
 export default function UniversitiesPage() {
   return (
@@ -114,6 +124,15 @@ export default function UniversitiesPage() {
             {c9Universities.map((university, index) => (
               <Card key={university.name} className="bg-muted/30 shadow-none">
                 <CardHeader className="gap-3">
+                  <div className="flex h-24 items-center justify-center rounded-2xl border bg-background/80 p-4">
+                    <Image
+                      src={university.logo}
+                      alt={`${university.name} logo`}
+                      width={180}
+                      height={80}
+                      className="h-14 w-auto object-contain"
+                    />
+                  </div>
                   <Badge variant="outline" className="w-fit">
                     {String(index + 1).padStart(2, "0")}
                   </Badge>

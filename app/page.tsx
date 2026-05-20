@@ -49,7 +49,7 @@ const featuredUniversities = [
     city: "Beijing",
     href: "/universities/peking-university",
     website: "https://www.pku.edu.cn",
-    logo: "/pekin.png",
+    logo: "/peking-university.png",
   },
   {
     name: "Tsinghua University",
@@ -57,7 +57,7 @@ const featuredUniversities = [
     city: "Beijing",
     href: "/universities/tsinghua-university",
     website: "https://www.tsinghua.edu.cn",
-    logo: "/tsinghua.png",
+    logo: "/tsinghua-university.png",
   },
   {
     name: "Fudan University",
@@ -65,7 +65,7 @@ const featuredUniversities = [
     city: "Shanghai",
     href: "/universities/fudan-university",
     website: "https://www.fudan.edu.cn",
-    logo: "/fudan.png",
+    logo: "/fudan-university.png",
   },
 ] as const;
 

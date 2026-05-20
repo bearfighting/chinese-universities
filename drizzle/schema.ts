@@ -1,6 +1,16 @@
-import { pgTable, index, uuid, text, integer, timestamp, unique, foreignKey, primaryKey } from "drizzle-orm/pg-core"
+import { pgTable, unique, uuid, text, timestamp, index, integer, foreignKey, primaryKey } from "drizzle-orm/pg-core"
 
 
+
+export const classifications = pgTable("classifications", {
+	id: uuid().defaultRandom().primaryKey().notNull(),
+	code: text().notNull(),
+	name: text().notNull(),
+	description: text(),
+	created_at: timestamp({ mode: 'string' }).defaultNow(),
+}, (table) => [
+	unique("classifications_code_key").on(table.code),
+]);
 
 export const universities = pgTable("universities", {
 	id: uuid().defaultRandom().primaryKey().notNull(),
@@ -14,18 +24,10 @@ export const universities = pgTable("universities", {
 	established_year: integer(),
 	created_at: timestamp({ mode: 'string' }).defaultNow(),
 	updated_at: timestamp({ mode: 'string' }).defaultNow(),
+	slug: text(),
 }, (table) => [
 	index("idx_universities_region").using("btree", table.region.asc().nullsLast().op("text_ops")),
-]);
-
-export const classifications = pgTable("classifications", {
-	id: uuid().defaultRandom().primaryKey().notNull(),
-	code: text().notNull(),
-	name: text().notNull(),
-	description: text(),
-	created_at: timestamp({ mode: 'string' }).defaultNow(),
-}, (table) => [
-	unique("classifications_code_key").on(table.code),
+	unique("universities_slug_key").on(table.slug),
 ]);
 
 export const university_classifications = pgTable("university_classifications", {

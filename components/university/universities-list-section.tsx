@@ -1,7 +1,12 @@
 import { Badge } from "@/components/ui/badge";
 import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion";
+import {
   Card,
-  CardContent,
   CardDescription,
   CardHeader,
   CardTitle,
@@ -11,37 +16,69 @@ import UniversityListCard, {
   type UniversityListItem,
 } from "@/components/university/university-list-card";
 
-type Props = {
+export type UniversityClassificationGroup = {
+  code: string;
+  name: string;
+  description: string | null;
   universities: UniversityListItem[];
 };
 
-export default function UniversitiesListSection({ universities }: Props) {
+type Props = {
+  groups: UniversityClassificationGroup[];
+};
+
+export default function UniversitiesListSection({ groups }: Props) {
   return (
     <Card>
-      <CardHeader className="gap-4 border-b">
-        <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
-          <div className="space-y-2">
-            <CardTitle className="text-2xl">C9 League Members</CardTitle>
-            <CardDescription>
-              Nine universities commonly grouped as the most prestigious public
-              research institutions in China.
-            </CardDescription>
-          </div>
-          <Badge variant="outline" className="w-fit rounded-full px-3 py-1">
-            {universities.length} universities
-          </Badge>
-        </div>
+      <CardHeader className="gap-3 border-b">
+        <Badge variant="secondary" className="w-fit rounded-full px-3 py-1">
+          Classifications
+        </Badge>
+        <CardTitle className="text-2xl">Browse universities by category</CardTitle>
+        <CardDescription>
+          Open one classification at a time to compare schools inside that
+          group. This keeps the page compact now and scales better as more
+          universities are added.
+        </CardDescription>
       </CardHeader>
 
-      <CardContent className="grid gap-4 pt-6 md:grid-cols-2 xl:grid-cols-3">
-        {universities.map((university, index) => (
-          <UniversityListCard
-            key={university.id}
-            university={university}
-            index={index}
-          />
-        ))}
-      </CardContent>
+      <div className="px-6">
+        <Accordion type="single" collapsible defaultValue={groups[0]?.code}>
+          {groups.map((group) => (
+            <AccordionItem key={group.code} value={group.code}>
+              <AccordionTrigger className="py-6">
+                <div className="flex flex-1 flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
+                  <div className="space-y-1">
+                    <p className="text-lg font-semibold text-foreground">
+                      {group.name}
+                    </p>
+                    <p className="text-muted-foreground max-w-3xl text-sm leading-6">
+                      {group.description ?? "University classification group"}
+                    </p>
+                  </div>
+                  <Badge
+                    variant="outline"
+                    className="w-fit rounded-full px-3 py-1"
+                  >
+                    {group.universities.length} universities
+                  </Badge>
+                </div>
+              </AccordionTrigger>
+              <AccordionContent>
+                <div className="grid gap-4 pt-2 md:grid-cols-2 xl:grid-cols-3">
+                  {group.universities.map((university, index) => (
+                    <UniversityListCard
+                      key={`${group.code}-${university.id}`}
+                      university={university}
+                      index={index}
+                    />
+                  ))}
+                </div>
+              </AccordionContent>
+            </AccordionItem>
+          ))}
+        </Accordion>
+      </div>
     </Card>
   );
 }

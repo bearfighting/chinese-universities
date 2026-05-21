@@ -47,3 +47,17 @@ export const university_classifications = pgTable("university_classifications", 
 		}).onDelete("cascade"),
 	primaryKey({ columns: [table.university_id, table.classification_id], name: "university_classifications_pkey"}),
 ]);
+
+export const university_rankings = pgTable("university_rankings", {
+	id: uuid().defaultRandom().primaryKey().notNull(),
+	university_id: uuid().notNull(),
+	system: text().notNull(),
+	year: integer().notNull(),
+	rank_from: integer(),
+	rank_to: integer(),
+	rank_text: text(),
+	source_url: text(),
+	created_at: timestamp({ mode: 'string' }).defaultNow(),
+}, (table) => [
+	index("idx_university_rankings_university").using("btree", table.university_id.asc().nullsLast().op("uuid_ops")),
+]);

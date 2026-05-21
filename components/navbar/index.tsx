@@ -29,7 +29,7 @@ export default function Navbar() {
 
   return (
     <header className="sticky top-0 z-50 w-full border-b bg-background/80 backdrop-blur">
-      <div className="mx-auto hidden min-h-18 max-w-7xl items-center gap-6 px-4 py-3 lg:flex">
+      <div className="mx-auto hidden min-h-18 max-w-7xl items-center gap-6 px-4 py-3 2xl:flex">
         <Link
           href="/"
           className="flex shrink-0 items-center gap-3 rounded-xl px-1 py-1 outline-none transition-opacity hover:opacity-90 focus-visible:ring-[3px] focus-visible:ring-ring/50"
@@ -86,7 +86,7 @@ export default function Navbar() {
         </div>
       </div>
 
-      <div className="mx-auto flex min-h-18 max-w-7xl items-center gap-3 px-4 py-3 lg:hidden">
+      <div className="mx-auto flex min-h-18 max-w-7xl items-center gap-3 px-4 py-3 2xl:hidden">
         <Link
           href="/"
           className="flex shrink-0 items-center rounded-xl px-1 py-1 outline-none transition-opacity hover:opacity-90 focus-visible:ring-[3px] focus-visible:ring-ring/50"
@@ -106,9 +106,15 @@ export default function Navbar() {
         <div className="min-w-0 flex-1">
           <Link
             href="/search"
-            className="flex h-11 items-center justify-center rounded-full border bg-background px-4 text-sm font-medium text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
+            className="flex h-11 items-center justify-center rounded-full border bg-background px-4 text-sm font-medium text-muted-foreground transition-colors hover:bg-muted hover:text-foreground md:justify-start"
           >
-            Search universities, rankings, cities...
+            <span className="truncate sm:hidden">Search</span>
+            <span className="hidden truncate sm:block md:hidden">
+              Search universities...
+            </span>
+            <span className="hidden truncate md:block">
+              Search universities, rankings, cities...
+            </span>
           </Link>
         </div>
 

@@ -30,6 +30,24 @@ function getUniversityLogoPath(slug: string) {
   return `/${slug}.png`;
 }
 
+const universityHeroImages: Record<string, string> = {
+  "peking-university": "/university-views/peking-university.jpg",
+  "tsinghua-university": "/university-views/tsinghua-university.png",
+  "fudan-university": "/university-views/fudan-university.jpg",
+  "shanghai-jiao-tong-university":
+    "/university-views/shanghai-jiao-tong-university.jpeg",
+  "zhejiang-university": "/university-views/zhejiang-university.jpg",
+  ustc: "/university-views/ustc.jpg",
+  "nanjing-university": "/university-views/nanjing-university.jpg",
+  "harbin-institute-of-technology":
+    "/university-views/harbin-institute-of-technology.webp",
+  "xian-jiaotong-university": "/university-views/xian-jiaotong-university.webp",
+};
+
+function getUniversityHeroImagePath(slug: string) {
+  return universityHeroImages[slug] ?? null;
+}
+
 type Props = {
   university: UniversityPreview;
   rankings: UniversityRankingView[];
@@ -44,6 +62,7 @@ export default function UniversityDetailPreview({
   const [selectedDegree, setSelectedDegree] = useState<DegreeLevel>("Master");
   const [selectedLanguage, setSelectedLanguage] =
     useState<TeachingLanguage>("English-taught");
+  const heroImagePath = getUniversityHeroImagePath(university.slug);
 
   const currentAdmissions = university.admissions.find(
     (item) =>
@@ -53,10 +72,42 @@ export default function UniversityDetailPreview({
   return (
     <main className="flex-1 bg-background">
       <section className="relative overflow-hidden border-b bg-[linear-gradient(135deg,rgba(17,24,39,0.98),rgba(31,41,55,0.94)_45%,rgba(120,53,15,0.86))] text-white">
+        {heroImagePath ? (
+          <div className="absolute inset-0">
+            <Image
+              src={heroImagePath}
+              alt={`${university.englishName} campus view`}
+              fill
+              priority
+              className="object-cover opacity-26"
+            />
+          </div>
+        ) : null}
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(255,255,255,0.12),transparent_32%),radial-gradient(circle_at_bottom_right,rgba(245,158,11,0.18),transparent_28%)]" />
+        <div className="absolute inset-0 bg-[linear-gradient(115deg,rgba(15,23,42,0.92),rgba(15,23,42,0.78)_42%,rgba(30,41,59,0.72)_62%,rgba(120,53,15,0.78))]" />
         <div className="relative mx-auto flex w-full max-w-6xl flex-col gap-10 px-6 py-14 sm:px-10 lg:px-12">
           <div className="flex flex-col gap-8 lg:flex-row lg:items-start lg:justify-between">
             <div className="max-w-3xl space-y-5">
+              <div className="flex items-center gap-4">
+                <div className="flex size-18 shrink-0 items-center justify-center rounded-3xl border border-white/12 bg-white/92 p-3 shadow-lg shadow-black/10">
+                  <Image
+                    src={getUniversityLogoPath(university.slug)}
+                    alt={`${university.englishName} logo`}
+                    width={96}
+                    height={96}
+                    className="h-12 w-auto object-contain"
+                  />
+                </div>
+                <div className="space-y-1">
+                  <p className="text-sm uppercase tracking-[0.3em] text-white/60">
+                    University Preview
+                  </p>
+                  <p className="text-sm text-white/72">
+                    A richer hero with campus imagery and real ranking data
+                  </p>
+                </div>
+              </div>
+
               <div className="flex flex-wrap gap-2">
                 {classifications.map((tag) => (
                   <Badge
@@ -70,9 +121,6 @@ export default function UniversityDetailPreview({
               </div>
 
               <div className="space-y-3">
-                <p className="text-sm uppercase tracking-[0.3em] text-white/60">
-                  University Preview
-                </p>
                 <h1 className="text-4xl font-semibold tracking-tight sm:text-5xl">
                   {university.englishName}
                 </h1>
@@ -120,48 +168,76 @@ export default function UniversityDetailPreview({
               </div>
             </div>
 
-            <Card className="w-full max-w-md border-white/10 bg-white/6 text-white shadow-2xl backdrop-blur-sm">
-              <CardHeader className="gap-4">
-                <div className="flex h-24 items-center justify-center rounded-3xl border border-white/10 bg-white/95 p-4">
-                  <Image
-                    src={getUniversityLogoPath(university.slug)}
-                    alt={`${university.englishName} logo`}
-                    width={220}
-                    height={88}
-                    className="h-16 w-auto object-contain"
-                  />
-                </div>
-                <div className="space-y-1">
+            <div className="w-full max-w-md space-y-4">
+              <div className="overflow-hidden rounded-[2rem] border border-white/12 bg-white/6 shadow-2xl backdrop-blur-sm">
+                {heroImagePath ? (
+                  <div className="relative h-64">
+                    <Image
+                      src={heroImagePath}
+                      alt={`${university.englishName} campus view`}
+                      fill
+                      className="object-cover"
+                    />
+                    <div className="absolute inset-0 bg-[linear-gradient(180deg,transparent,rgba(15,23,42,0.12)_60%,rgba(15,23,42,0.68))]" />
+                    <div className="absolute inset-x-0 bottom-0 flex items-end justify-between gap-4 p-5">
+                      <div>
+                        <p className="text-sm font-medium text-white/70">
+                          Campus view
+                        </p>
+                        <p className="mt-1 text-lg font-semibold text-white">
+                          {university.city}
+                        </p>
+                      </div>
+                      <Badge className="rounded-full border-white/12 bg-white/12 text-white">
+                        {classifications[0] ?? "Featured"}
+                      </Badge>
+                    </div>
+                  </div>
+                ) : (
+                  <div className="flex h-64 items-center justify-center bg-[radial-gradient(circle_at_center,rgba(255,255,255,0.12),transparent_60%),linear-gradient(135deg,rgba(255,255,255,0.08),rgba(255,255,255,0.02))] p-6">
+                    <Image
+                      src={getUniversityLogoPath(university.slug)}
+                      alt={`${university.englishName} logo`}
+                      width={240}
+                      height={120}
+                      className="h-20 w-auto object-contain opacity-95"
+                    />
+                  </div>
+                )}
+              </div>
+
+              <Card className="border-white/10 bg-white/6 text-white shadow-2xl backdrop-blur-sm">
+                <CardHeader className="gap-2">
                   <CardTitle className="text-white">Ranking Snapshot</CardTitle>
                   <CardDescription className="text-white/70">
                     A compact version of the top-of-page summary card you can
                     reuse across all schools.
                   </CardDescription>
-                </div>
-              </CardHeader>
-              <CardContent className="grid gap-3">
-                {rankings.map((ranking) => (
-                  <div
-                    key={`${ranking.system}-${ranking.year}`}
-                    className="rounded-3xl border border-white/10 bg-black/14 p-4"
-                  >
-                    <div className="flex items-start justify-between gap-4">
-                      <div>
-                        <p className="text-sm font-medium text-white/70">
-                          {ranking.system} {ranking.year}
-                        </p>
-                        <p className="mt-1 text-sm text-white/60">
-                          {ranking.label}
+                </CardHeader>
+                <CardContent className="grid gap-3">
+                  {rankings.map((ranking) => (
+                    <div
+                      key={`${ranking.system}-${ranking.year}`}
+                      className="rounded-3xl border border-white/10 bg-black/14 p-4"
+                    >
+                      <div className="flex items-start justify-between gap-4">
+                        <div>
+                          <p className="text-sm font-medium text-white/70">
+                            {ranking.system} {ranking.year}
+                          </p>
+                          <p className="mt-1 text-sm text-white/60">
+                            {ranking.label}
+                          </p>
+                        </div>
+                        <p className="text-3xl font-semibold tracking-tight">
+                          {ranking.rank}
                         </p>
                       </div>
-                      <p className="text-3xl font-semibold tracking-tight">
-                        {ranking.rank}
-                      </p>
                     </div>
-                  </div>
-                ))}
-              </CardContent>
-            </Card>
+                  ))}
+                </CardContent>
+              </Card>
+            </div>
           </div>
         </div>
       </section>

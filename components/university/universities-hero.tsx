@@ -7,12 +7,12 @@ export default function UniversitiesHero() {
         China Universities
       </Badge>
       <h1 className="text-4xl font-semibold tracking-tight text-foreground sm:text-5xl">
-        C9 Universities of China
+        Discover universities in China
       </h1>
       <p className="text-muted-foreground text-base leading-7 sm:text-lg">
-        The C9 League is often described as China&apos;s equivalent of the Ivy
-        League. It brings together nine elite research universities and is a
-        strong starting point for exploring top universities in China.
+        Explore universities through classifications, rankings, and location,
+        then refine your shortlist with more academic filters as new data is
+        added.
       </p>
     </div>
   );

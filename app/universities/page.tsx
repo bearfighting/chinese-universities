@@ -2,7 +2,9 @@ import { asc, eq, inArray } from "drizzle-orm";
 import { connection } from "next/server";
 
 import UniversitiesHero from "@/components/university/universities-hero";
-import UniversitiesListSection from "@/components/university/universities-list-section";
+import UniversitiesListSection, {
+  type UniversityClassificationGroup,
+} from "@/components/university/universities-list-section";
 import { db } from "@/lib/db";
 import {
   classifications,
@@ -18,7 +20,7 @@ import {
 export default async function UniversitiesPage() {
   await connection();
 
-  const c9Universities = await db
+  const universityRows = await db
     .select({
       id: universities.id,
       chineseName: universities.name,
@@ -26,6 +28,9 @@ export default async function UniversitiesPage() {
       city: universities.city,
       slug: universities.slug,
       website: universities.website,
+      classificationCode: classifications.code,
+      classificationName: classifications.name,
+      classificationDescription: classifications.description,
     })
     .from(universities)
     .innerJoin(
@@ -36,10 +41,21 @@ export default async function UniversitiesPage() {
       classifications,
       eq(classifications.id, university_classifications.classification_id),
     )
-    .where(eq(classifications.code, "C9"))
-    .orderBy(asc(universities.name_en));
+    .where(
+      inArray(classifications.code, [
+        "C9",
+        "985",
+        "211",
+        "DOUBLE_FIRST_CLASS",
+      ]),
+    )
+    .orderBy(
+      asc(classifications.code),
+      asc(universities.name_en),
+      asc(universities.name),
+    );
 
-  const universityIds = c9Universities.map((university) => university.id);
+  const universityIds = [...new Set(universityRows.map((row) => row.id))];
 
   const rankings =
     universityIds.length > 0
@@ -65,24 +81,51 @@ export default async function UniversitiesPage() {
     rankingsByUniversity.set(ranking.universityId, current);
   }
 
-  const universitiesWithRankings = c9Universities.map((university) => {
+  const classificationOrder = [
+    "C9",
+    "985",
+    "211",
+    "DOUBLE_FIRST_CLASS",
+  ] as const;
+
+  const groupedUniversities = new Map<string, UniversityClassificationGroup>();
+
+  for (const university of universityRows) {
     const primaryRanking = pickPrimaryRanking(
       rankingsByUniversity.get(university.id) ?? [],
     );
 
-    return {
-      ...university,
+    const group = groupedUniversities.get(university.classificationCode) ?? {
+      code: university.classificationCode,
+      name: university.classificationName,
+      description: university.classificationDescription,
+      universities: [],
+    };
+
+    group.universities.push({
+      id: university.id,
+      chineseName: university.chineseName,
+      name: university.name,
+      city: university.city,
+      slug: university.slug,
+      website: university.website,
       primaryRanking: primaryRanking
         ? toUniversityRankingView(primaryRanking)
         : null,
-    };
-  });
+    });
+
+    groupedUniversities.set(university.classificationCode, group);
+  }
+
+  const groups = classificationOrder
+    .map((code) => groupedUniversities.get(code))
+    .filter((group): group is UniversityClassificationGroup => Boolean(group));
 
   return (
     <main className="flex-1 bg-background">
       <section className="mx-auto flex w-full max-w-6xl flex-col gap-10 px-6 py-16 sm:px-10 lg:px-12">
         <UniversitiesHero />
-        <UniversitiesListSection universities={universitiesWithRankings} />
+        <UniversitiesListSection groups={groups} />
       </section>
     </main>
   );

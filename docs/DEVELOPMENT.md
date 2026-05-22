@@ -66,6 +66,9 @@ The universities directory should eventually support filtering and comparison ac
   - scholarship records
 - `/universities/[slug]` now reads detail-page admissions/profile/scholarship data from the database when available and falls back to preview data for schools that have not yet been imported.
 - The detail page scholarship and admissions section headers now switch away from mock copy when real database data exists.
+- First-pass locale routing is now in place under `/{locale}` with `en` and `zh`.
+- The navbar now supports locale-aware navigation and language switching.
+- The home page and universities list page now use dictionary-based UI copy for English and Chinese.
 
 ### Current frontend files of interest
 
@@ -73,8 +76,10 @@ The universities directory should eventually support filtering and comparison ac
 - `app/universities/[slug]/page.tsx`
 - `components/university/*`
 - `components/navbar/index.tsx`
+- `components/site/home-page.tsx`
 - `lib/university-rankings.ts`
 - `lib/university-preview-data.ts`
+- `lib/i18n/*`
 
 ## Current database status
 
@@ -333,6 +338,30 @@ minimum English + Chinese experience:
 - original-language source preservation
 - English explanation layer where useful
 - future schema evolution for multilingual content fields
+
+Current i18n implementation status:
+
+- `/{locale}` route shell exists for `en` and `zh`
+- `/` now redirects to `/${defaultLocale}`
+- locale-aware navigation is working
+- home page UI copy is localized
+- universities list page UI copy is localized
+- placeholder pages and university detail page content still need their own UI-copy migration
+- root `html lang` is still static and should be revisited in a later routing pass if we want locale-accurate document metadata
+
+Longer-term database direction for i18n:
+
+- Do not split languages into separate PostgreSQL schemas such as `english`, `chinese`, or `french`.
+- Current phase should continue using explicit bilingual columns where the scope is still mainly English + Chinese.
+- If the product later expands to several more languages, prefer moving content-bearing entities toward translation tables rather than endlessly adding `*_en`, `*_zh`, `*_fr`, `*_de` columns.
+- Good candidates for future translation tables:
+  - classifications
+  - cities
+  - university profiles
+  - scholarship descriptions
+  - admissions summaries
+  - guides / blog content
+- Main entity tables should keep language-independent fields, while translation tables should hold locale-specific labels, full names, and descriptions.
 
 ## Known environment constraint
 

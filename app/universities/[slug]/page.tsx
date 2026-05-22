@@ -23,6 +23,8 @@ import {
 } from "@/lib/university-preview-data";
 import { toUniversityRankingView } from "@/lib/university-rankings";
 
+export const dynamic = "force-dynamic";
+
 export async function generateStaticParams() {
   return universityPreviewData.map((university) => ({
     slug: university.slug,

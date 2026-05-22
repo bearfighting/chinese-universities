@@ -4,6 +4,8 @@ import HomePage from "@/components/site/home-page";
 import { isLocale } from "@/lib/i18n/config";
 import { getDictionary } from "@/lib/i18n/dictionaries";
 
+export const dynamic = "force-dynamic";
+
 export default async function LocalizedHomePage({
   params,
 }: {

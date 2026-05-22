@@ -9,39 +9,49 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import {
+  getLocaleFromPathname,
+  localizeHref,
+  replacePathLocale,
+  type Locale,
+} from "@/lib/i18n/config";
+import { getDictionary } from "@/lib/i18n/dictionaries";
 import { cn } from "@/lib/utils";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
-const primaryNavigation = [
-  { href: "/universities", label: "Universities" },
-  { href: "/rankings", label: "Rankings" },
-  { href: "/locations", label: "Locations" },
-  { href: "/majors", label: "Majors" },
-  { href: "/scholarships", label: "Scholarships" },
-  { href: "/guides", label: "Guides" },
-  { href: "/blog", label: "Blog" },
-] as const;
-
 export default function Navbar() {
   const pathname = usePathname();
+  const locale = getLocaleFromPathname(pathname);
+  const dictionary = getDictionary(locale);
+  const navigation = [
+    { href: "/universities", label: dictionary.nav.links.universities },
+    { href: "/rankings", label: dictionary.nav.links.rankings },
+    { href: "/locations", label: dictionary.nav.links.locations },
+    { href: "/majors", label: dictionary.nav.links.majors },
+    { href: "/scholarships", label: dictionary.nav.links.scholarships },
+    { href: "/guides", label: dictionary.nav.links.guides },
+    { href: "/blog", label: dictionary.nav.links.blog },
+  ] as const;
 
   return (
     <header className="sticky top-0 z-50 w-full border-b border-border/70 bg-background/82 backdrop-blur-xl">
       <div className="mx-auto hidden min-h-18 w-full max-w-[96rem] items-center gap-4 px-5 py-3 xl:flex 2xl:px-6">
-        <BrandLockup detailed />
+        <BrandLockup detailed locale={locale} />
 
         <nav className="min-w-0 flex-[1.15]">
           <div className="flex items-center justify-center rounded-full border border-border/80 bg-background/92 p-1 shadow-[0_1px_2px_rgba(15,23,42,0.03)]">
-            {primaryNavigation.map((item) => {
+            {navigation.map((item) => {
+              const localizedHref = localizeHref(locale, item.href);
               const isActive =
-                pathname === item.href || pathname.startsWith(`${item.href}/`);
+                pathname === localizedHref ||
+                pathname.startsWith(`${localizedHref}/`);
 
               return (
                 <Link
                   key={item.href}
-                  href={item.href}
+                  href={localizedHref}
                   aria-current={isActive ? "page" : undefined}
                   className={cn(
                     "shrink-0 rounded-full px-3 py-2 text-sm font-medium whitespace-nowrap transition-all 2xl:px-4",
@@ -57,22 +67,27 @@ export default function Navbar() {
           </div>
         </nav>
 
-        <div className="ml-auto w-full max-w-[22rem] 2xl:max-w-[24rem]">
-          <SearchChrome
-            href="/search"
-            placeholder="Search universities, rankings, provinces, majors..."
-            compact={false}
-          />
+        <div className="ml-auto flex items-center gap-3">
+          <LanguageSwitch locale={locale} pathname={pathname} />
+          <div className="w-full max-w-[22rem] 2xl:max-w-[24rem]">
+            <SearchChrome
+              href={localizeHref(locale, "/search")}
+              locale={locale}
+              placeholder={dictionary.nav.searchPlaceholder}
+              compact={false}
+            />
+          </div>
         </div>
       </div>
 
       <div className="mx-auto flex min-h-18 w-full max-w-[96rem] items-center justify-between gap-3 px-4 py-3 xl:hidden">
-        <BrandLockup />
+        <BrandLockup locale={locale} />
 
         <div className="min-w-0 flex-1 md:max-w-[min(42rem,calc(100%-4.5rem))]">
           <SearchChrome
-            href="/search"
-            placeholder="Search universities, rankings, provinces, majors..."
+            href={localizeHref(locale, "/search")}
+            locale={locale}
+            placeholder={dictionary.nav.searchPlaceholder}
             compact
           />
         </div>
@@ -83,21 +98,23 @@ export default function Navbar() {
               variant="outline"
               size="icon"
               className="size-11 shrink-0 rounded-full border-border/80 bg-background/92 shadow-[0_1px_2px_rgba(15,23,42,0.03)]"
-              aria-label="Open navigation menu"
+              aria-label={dictionary.nav.openNavigationMenu}
             >
-              <span className="text-lg leading-none">≡</span>
+              <span className="text-lg leading-none">☰</span>
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end" className="w-64">
-            <DropdownMenuLabel>Navigate</DropdownMenuLabel>
-            {primaryNavigation.map((item) => {
+            <DropdownMenuLabel>{dictionary.nav.navigate}</DropdownMenuLabel>
+            {navigation.map((item) => {
+              const localizedHref = localizeHref(locale, item.href);
               const isActive =
-                pathname === item.href || pathname.startsWith(`${item.href}/`);
+                pathname === localizedHref ||
+                pathname.startsWith(`${localizedHref}/`);
 
               return (
                 <DropdownMenuItem key={item.href} asChild>
                   <Link
-                    href={item.href}
+                    href={localizedHref}
                     aria-current={isActive ? "page" : undefined}
                     className={cn(
                       "flex items-center justify-between gap-3 rounded-xl",
@@ -107,7 +124,7 @@ export default function Navbar() {
                     <span>{item.label}</span>
                     {isActive ? (
                       <span className="text-xs font-medium text-muted-foreground">
-                        Current
+                        {dictionary.nav.current}
                       </span>
                     ) : null}
                   </Link>
@@ -116,8 +133,20 @@ export default function Navbar() {
             })}
             <DropdownMenuSeparator />
             <DropdownMenuItem asChild>
-              <Link href="/search" className="rounded-xl">
-                Search
+              <Link href={localizeHref(locale, "/search")} className="rounded-xl">
+                {dictionary.nav.searchLabel}
+              </Link>
+            </DropdownMenuItem>
+            <DropdownMenuSeparator />
+            <DropdownMenuLabel>{dictionary.nav.language}</DropdownMenuLabel>
+            <DropdownMenuItem asChild>
+              <Link href={replacePathLocale(pathname, "en")} className="rounded-xl">
+                {dictionary.nav.english}
+              </Link>
+            </DropdownMenuItem>
+            <DropdownMenuItem asChild>
+              <Link href={replacePathLocale(pathname, "zh")} className="rounded-xl">
+                {dictionary.nav.chinese}
               </Link>
             </DropdownMenuItem>
           </DropdownMenuContent>
@@ -127,12 +156,20 @@ export default function Navbar() {
   );
 }
 
-function BrandLockup({ detailed = false }: { detailed?: boolean }) {
+function BrandLockup({
+  detailed = false,
+  locale,
+}: {
+  detailed?: boolean;
+  locale: Locale;
+}) {
+  const dictionary = getDictionary(locale);
+
   return (
     <Link
-      href="/"
+      href={localizeHref(locale, "/")}
       className="flex shrink-0 items-center gap-3 rounded-xl px-1 py-1 outline-none transition-opacity hover:opacity-90 focus-visible:ring-[3px] focus-visible:ring-ring/50"
-      aria-label="Chinese Universities home"
+      aria-label={dictionary.nav.brandAriaLabel}
     >
       <div
         className={cn(
@@ -151,10 +188,10 @@ function BrandLockup({ detailed = false }: { detailed?: boolean }) {
       {detailed ? (
         <div className="min-w-0">
           <p className="text-sm font-semibold tracking-tight text-foreground">
-            Chinese Universities
+            {dictionary.nav.brandTitle}
           </p>
           <p className="text-muted-foreground text-xs">
-            Explore, compare, and plan your study path
+            {dictionary.nav.brandSubtitle}
           </p>
         </div>
       ) : null}
@@ -164,13 +201,17 @@ function BrandLockup({ detailed = false }: { detailed?: boolean }) {
 
 function SearchChrome({
   href,
+  locale,
   placeholder,
   compact,
 }: {
   href: string;
+  locale: Locale;
   placeholder: string;
   compact: boolean;
 }) {
+  const dictionary = getDictionary(locale);
+
   return (
     <Link
       href={href}
@@ -178,7 +219,7 @@ function SearchChrome({
         "group relative flex items-center gap-3 overflow-hidden rounded-full border border-border/80 bg-[linear-gradient(180deg,rgba(255,255,255,0.98),rgba(246,246,246,0.94))] text-sm text-muted-foreground shadow-[0_1px_2px_rgba(15,23,42,0.04)] transition-all hover:-translate-y-px hover:border-border hover:text-foreground hover:shadow-[0_10px_28px_rgba(15,23,42,0.08)] focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-ring/40",
         compact ? "h-11 px-3.5" : "h-11 px-4",
       )}
-      aria-label="Search"
+      aria-label={dictionary.nav.searchLabel}
     >
       <span className="pointer-events-none absolute inset-y-0 left-0 w-16 bg-[radial-gradient(circle_at_left,rgba(15,23,42,0.05),transparent_70%)] opacity-0 transition-opacity group-hover:opacity-100" />
       <span className="relative flex size-7 shrink-0 items-center justify-center rounded-full bg-muted/80 text-foreground/70 transition-colors group-hover:bg-muted group-hover:text-foreground">
@@ -187,17 +228,21 @@ function SearchChrome({
       <span className="relative min-w-0 flex-1 truncate">
         {compact ? (
           <>
-            <span className="truncate sm:hidden">Search</span>
+            <span className="truncate sm:hidden">
+              {dictionary.nav.searchLabel}
+            </span>
             <span className="hidden truncate sm:block md:hidden">
-              Search universities...
+              {dictionary.nav.searchShort}
             </span>
             <span className="hidden truncate md:block">{placeholder}</span>
           </>
         ) : (
           <span className="flex items-center gap-2">
-            <span className="font-medium text-foreground/85">Search</span>
+            <span className="font-medium text-foreground/85">
+              {dictionary.nav.searchLabel}
+            </span>
             <span className="truncate text-muted-foreground/95">
-              {placeholder.replace(/^Search\s+/i, "")}
+              {placeholder}
             </span>
           </span>
         )}
@@ -220,6 +265,44 @@ function SearchChrome({
         </span>
       ) : null}
     </Link>
+  );
+}
+
+function LanguageSwitch({
+  locale,
+  pathname,
+}: {
+  locale: Locale;
+  pathname: string;
+}) {
+  const dictionary = getDictionary(locale);
+
+  return (
+    <div
+      className="inline-flex items-center rounded-full border border-border/80 bg-background/92 p-1 shadow-[0_1px_2px_rgba(15,23,42,0.03)]"
+      aria-label={dictionary.nav.language}
+    >
+      {(["en", "zh"] as const).map((targetLocale) => {
+        const isActive = locale === targetLocale;
+
+        return (
+          <Link
+            key={targetLocale}
+            href={replacePathLocale(pathname, targetLocale)}
+            className={cn(
+              "rounded-full px-3 py-2 text-sm font-medium transition-all",
+              isActive
+                ? "bg-secondary text-foreground shadow-[inset_0_1px_0_rgba(255,255,255,0.7)]"
+                : "text-muted-foreground hover:bg-muted hover:text-foreground",
+            )}
+          >
+            {targetLocale === "en"
+              ? dictionary.nav.english
+              : dictionary.nav.chinese}
+          </Link>
+        );
+      })}
+    </div>
   );
 }
 

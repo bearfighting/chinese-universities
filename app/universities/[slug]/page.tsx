@@ -173,7 +173,7 @@ export default async function UniversityDetailPage(
             return left.system.localeCompare(right.system);
           })
           .map(toUniversityRankingView)
-      : previewUniversity.rankings.map((ranking) => ({
+      : fallbackUniversity.rankings.map((ranking) => ({
           ...ranking,
           sourceUrl: null,
         }));

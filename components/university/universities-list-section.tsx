@@ -40,10 +40,10 @@ export default function UniversitiesListSection({
   groups,
   locale,
 }: Props) {
-  const [openGroup, setOpenGroup] = useState<string | undefined>(groups[0]?.code);
+  const [openGroup, setOpenGroup] = useState<string | undefined>(undefined);
   const itemRefs = useRef<Record<string, HTMLDivElement | null>>({});
 
-function handleValueChange(value: string) {
+  function handleValueChange(value: string) {
     setOpenGroup(value || undefined);
 
     if (!value) {

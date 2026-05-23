@@ -51,6 +51,10 @@ export default function UniversityListCard({
       ? (rankingLabelZhMap[university.primaryRanking?.label ?? ""] ??
         university.primaryRanking?.label)
       : university.primaryRanking?.label;
+  const officialSiteAriaLabel =
+    locale === "zh"
+      ? `访问${university.chineseName}官网`
+      : `Official site of ${englishName}`;
 
   return (
     <Card className="group overflow-hidden border-border/70 bg-muted/30 shadow-none transition-all duration-300 hover:-translate-y-1 hover:border-slate-300 hover:bg-background hover:shadow-[0_18px_50px_-24px_rgba(15,23,42,0.35)]">
@@ -59,9 +63,10 @@ export default function UniversityListCard({
           <Image
             src={getUniversityLogoPath(university.slug)}
             alt={`${englishName} logo`}
-            width={180}
-            height={80}
-            className="h-14 w-auto object-contain transition-transform duration-300 group-hover:scale-105"
+            width={112}
+            height={56}
+            sizes="112px"
+            className="h-14 w-28 object-contain transition-transform duration-300 group-hover:scale-105"
           />
         </div>
         <Badge
@@ -113,6 +118,7 @@ export default function UniversityListCard({
                 href={university.website}
                 target="_blank"
                 rel="noopener noreferrer"
+                aria-label={officialSiteAriaLabel}
               >
                 {dictionary.universities.officialSite}
               </a>

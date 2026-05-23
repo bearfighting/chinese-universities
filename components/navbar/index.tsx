@@ -54,7 +54,7 @@ export default function Navbar() {
                   href={localizedHref}
                   aria-current={isActive ? "page" : undefined}
                   className={cn(
-                    "shrink-0 rounded-full px-3 py-2 text-sm font-medium whitespace-nowrap transition-all 2xl:px-4",
+                    "inline-flex min-h-11 shrink-0 items-center justify-center rounded-full px-3.5 py-2.5 text-sm font-medium whitespace-nowrap transition-all 2xl:px-4.5",
                     isActive
                       ? "bg-secondary text-foreground shadow-[inset_0_1px_0_rgba(255,255,255,0.7)]"
                       : "text-muted-foreground hover:bg-muted hover:text-foreground",
@@ -169,7 +169,7 @@ function BrandLockup({
     <Link
       href={localizeHref(locale, "/")}
       className="flex shrink-0 items-center gap-3 rounded-xl px-1 py-1 outline-none transition-opacity hover:opacity-90 focus-visible:ring-[3px] focus-visible:ring-ring/50"
-      aria-label={dictionary.nav.brandAriaLabel}
+      aria-label={detailed ? undefined : dictionary.nav.brandTitle}
     >
       <div
         className={cn(
@@ -179,7 +179,7 @@ function BrandLockup({
       >
         <Image
           src="/chinese-universities-logo.png"
-          alt="Chinese Universities logo"
+          alt=""
           fill
           sizes={detailed ? "52px" : "44px"}
           className="object-contain"
@@ -219,7 +219,6 @@ function SearchChrome({
         "group relative flex items-center gap-3 overflow-hidden rounded-full border border-border/80 bg-[linear-gradient(180deg,rgba(255,255,255,0.98),rgba(246,246,246,0.94))] text-sm text-muted-foreground shadow-[0_1px_2px_rgba(15,23,42,0.04)] transition-all hover:-translate-y-px hover:border-border hover:text-foreground hover:shadow-[0_10px_28px_rgba(15,23,42,0.08)] focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-ring/40",
         compact ? "h-11 px-3.5" : "h-11 px-4",
       )}
-      aria-label={dictionary.nav.searchLabel}
     >
       <span className="pointer-events-none absolute inset-y-0 left-0 w-16 bg-[radial-gradient(circle_at_left,rgba(15,23,42,0.05),transparent_70%)] opacity-0 transition-opacity group-hover:opacity-100" />
       <span className="relative flex size-7 shrink-0 items-center justify-center rounded-full bg-muted/80 text-foreground/70 transition-colors group-hover:bg-muted group-hover:text-foreground">
@@ -290,7 +289,7 @@ function LanguageSwitch({
             key={targetLocale}
             href={replacePathLocale(pathname, targetLocale)}
             className={cn(
-              "rounded-full px-3 py-2 text-sm font-medium transition-all",
+              "inline-flex min-h-11 items-center justify-center rounded-full px-3.5 py-2.5 text-sm font-medium transition-all",
               isActive
                 ? "bg-secondary text-foreground shadow-[inset_0_1px_0_rgba(255,255,255,0.7)]"
                 : "text-muted-foreground hover:bg-muted hover:text-foreground",

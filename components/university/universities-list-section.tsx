@@ -13,7 +13,6 @@ import {
   Card,
   CardDescription,
   CardHeader,
-  CardTitle,
 } from "@/components/ui/card";
 
 import UniversityListCard, {
@@ -80,9 +79,9 @@ function handleValueChange(value: string) {
         <Badge variant="secondary" className="w-fit rounded-full px-3 py-1">
           {dictionary.universities.listBadge}
         </Badge>
-        <CardTitle className="text-2xl">
+        <h2 className="text-2xl font-semibold tracking-tight">
           {dictionary.universities.listTitle}
-        </CardTitle>
+        </h2>
         <CardDescription>
           {dictionary.universities.listDescription}
         </CardDescription>

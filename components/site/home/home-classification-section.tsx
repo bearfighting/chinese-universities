@@ -37,15 +37,23 @@ export default function HomeClassificationSection({
 
       <div className="grid gap-4 md:grid-cols-2">
         {groups.map((group) => (
-          <Card key={group.code} className="border-border/70">
+          <Card
+            key={group.code}
+            className="group overflow-hidden border-border/70 transition-all duration-300 hover:-translate-y-1 hover:border-slate-300 hover:bg-background hover:shadow-[0_18px_50px_-24px_rgba(15,23,42,0.35)]"
+          >
             <CardHeader className="space-y-3">
-              <Badge variant="outline" className="w-fit">
+              <Badge
+                variant="outline"
+                className="w-fit transition-colors duration-300 group-hover:border-slate-300 group-hover:bg-slate-50"
+              >
                 {group.universityCount} {dictionary.universities.universitiesCount}
               </Badge>
               <div className="space-y-2">
-                <CardTitle>{group.name}</CardTitle>
+                <CardTitle className="transition-colors duration-300 group-hover:text-slate-900">
+                  {group.name}
+                </CardTitle>
                 {group.fullName ? (
-                  <p className="text-sm font-medium text-foreground/70">
+                  <p className="text-sm font-medium text-foreground/70 transition-colors duration-300 group-hover:text-foreground/85">
                     {group.fullName}
                   </p>
                 ) : null}

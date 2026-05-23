@@ -16,7 +16,13 @@ export default async function HomePage({ dictionary, locale }: Props) {
 
   return (
     <main className="flex-1 bg-background">
-      <HomeHeroSection dictionary={dictionary} locale={locale} />
+      <HomeHeroSection
+        cityCount={data.cities.length}
+        dictionary={dictionary}
+        featuredCount={data.featuredUniversities.length}
+        groupCount={data.classificationGroups.length}
+        locale={locale}
+      />
       <HomeClassificationSection
         dictionary={dictionary}
         groups={data.classificationGroups}

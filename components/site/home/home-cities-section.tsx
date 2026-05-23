@@ -39,16 +39,21 @@ export default function HomeCitiesSection({
           return (
             <Card
               key={`${city.cityEn}-${city.cityZh ?? ""}`}
-              className="border-border/70 shadow-none"
+              className="group overflow-hidden border-border/70 shadow-none transition-all duration-300 hover:-translate-y-1 hover:border-slate-300 hover:bg-background hover:shadow-[0_18px_50px_-24px_rgba(15,23,42,0.35)]"
             >
               <CardHeader className="space-y-3">
                 <div className="flex items-center justify-between gap-3">
-                  <CardTitle className="text-lg">{cityLabel}</CardTitle>
-                  <Badge variant="outline">
+                  <CardTitle className="text-lg transition-colors duration-300 group-hover:text-slate-900">
+                    {cityLabel}
+                  </CardTitle>
+                  <Badge
+                    variant="outline"
+                    className="transition-colors duration-300 group-hover:border-slate-300 group-hover:bg-slate-50"
+                  >
                     {city.universityCount} {dictionary.universities.universitiesCount}
                   </Badge>
                 </div>
-                <CardDescription>
+                <CardDescription className="transition-colors duration-300 group-hover:text-foreground/75">
                   {featuredSchoolNames || dictionary.universities.unknownCity}
                 </CardDescription>
               </CardHeader>

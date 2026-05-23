@@ -1,5 +1,3 @@
-import { connection } from "next/server";
-
 import HomeCitiesSection from "@/components/site/home/home-cities-section";
 import HomeClassificationSection from "@/components/site/home/home-classification-section";
 import HomeFeaturedSection from "@/components/site/home/home-featured-section";
@@ -14,8 +12,6 @@ type Props = {
 };
 
 export default async function HomePage({ dictionary, locale }: Props) {
-  await connection();
-
   const data = await getHomePageData(locale);
 
   return (

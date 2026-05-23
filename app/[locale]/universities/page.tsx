@@ -4,7 +4,7 @@ import UniversitiesPageContent from "@/components/university/universities-page-c
 import { isLocale } from "@/lib/i18n/config";
 import { getDictionary } from "@/lib/i18n/dictionaries";
 
-export const dynamic = "force-dynamic";
+export const dynamic = "force-static";
 
 export default async function LocalizedUniversitiesPage({
   params,

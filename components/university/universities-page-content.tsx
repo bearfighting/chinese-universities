@@ -1,5 +1,3 @@
-import { connection } from "next/server";
-
 import UniversitiesHero from "@/components/university/universities-hero";
 import UniversitiesListSection, {
 } from "@/components/university/universities-list-section";
@@ -16,7 +14,6 @@ export default async function UniversitiesPageContent({
   locale,
   dictionary,
 }: Props) {
-  await connection();
   const groups = await getUniversitiesPageData(locale);
 
   return (

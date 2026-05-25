@@ -1,5 +1,7 @@
 "use client";
 
+import { usePathname } from "next/navigation";
+
 import { Badge } from "@/components/ui/badge";
 import {
   Card,
@@ -8,6 +10,8 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import { getDictionary } from "@/lib/i18n/dictionaries";
+import { getLocaleFromPathname } from "@/lib/i18n/config";
 import type {
   AdmissionsPanel,
   DegreeLevel,
@@ -33,6 +37,7 @@ export default function UniversityDetailAdmissions({
   onSelectDegree,
   onSelectLanguage,
 }: Props) {
+  const locale = getLocaleFromPathname(usePathname());
   const currentAdmissions = admissions.find(
     (item) =>
       item.degree === selectedDegree && item.language === selectedLanguage,
@@ -46,22 +51,23 @@ export default function UniversityDetailAdmissions({
       : currentAdmissions.degree
     : null;
   const hasRealAdmissionsData = admissions.length > 0;
-  const admissionsTitle = hasRealAdmissionsData
-    ? "Admissions requirements and application path"
-    : "Degree and language tabs preview";
-  const admissionsDescription = hasRealAdmissionsData
-    ? "Switch between the available degree and language combinations to view deadlines, requirements, and document lists from the current admissions dataset."
-    : "This is a static mock, but the interaction model is real. It is a good way to test readability before wiring the database.";
+  const copy = getDictionary(locale).universityDetail.admissions;
 
   return (
     <Card className="bg-card transition-all duration-200 hover:-translate-y-0.5 hover:border-slate-300">
       <CardHeader className="gap-4 border-b">
         <div className="space-y-2">
           <Badge variant="secondary" className="w-fit rounded-full px-3 py-1">
-            Admissions Requirements
+            {copy.badge}
           </Badge>
-          <CardTitle className="text-2xl">{admissionsTitle}</CardTitle>
-          <CardDescription>{admissionsDescription}</CardDescription>
+          <CardTitle className="text-2xl">
+            {hasRealAdmissionsData ? copy.titleReal : copy.titleFallback}
+          </CardTitle>
+          <CardDescription>
+            {hasRealAdmissionsData
+              ? copy.descriptionReal
+              : copy.descriptionFallback}
+          </CardDescription>
         </div>
       </CardHeader>
       <CardContent className="grid gap-8 pt-6">
@@ -70,7 +76,7 @@ export default function UniversityDetailAdmissions({
             {shouldShowDegreeSelector ? (
               <div className="space-y-3">
                 <p className="text-sm font-medium text-foreground">
-                  Degree level
+                  {copy.degreeLevel}
                 </p>
                 <div className="flex flex-wrap gap-2">
                   {availableDegrees.map((level) => {
@@ -99,7 +105,7 @@ export default function UniversityDetailAdmissions({
             {shouldShowLanguageSelector ? (
               <div className="space-y-3">
                 <p className="text-sm font-medium text-foreground">
-                  Teaching language
+                  {copy.teachingLanguage}
                 </p>
                 <div className="flex flex-wrap gap-2">
                   {availableLanguages.map((language) => {
@@ -130,22 +136,22 @@ export default function UniversityDetailAdmissions({
         {currentAdmissions ? (
           <div className="grid gap-6 xl:grid-cols-[1.2fr_0.8fr]">
             <div className="grid gap-4 md:grid-cols-2">
-              <InfoPanel label="Tuition" value={currentAdmissions.tuition} />
+              <InfoPanel label={copy.tuition} value={currentAdmissions.tuition} />
               <InfoPanel
-                label="Program duration"
+                label={copy.programDuration}
                 value={currentAdmissions.duration}
               />
-              <InfoPanel label="Intake" value={currentAdmissions.intake} />
+              <InfoPanel label={copy.intake} value={currentAdmissions.intake} />
               <InfoPanel
-                label="Application deadline"
+                label={copy.applicationDeadline}
                 value={currentAdmissions.deadline}
               />
               <InfoPanel
-                label="Language requirement"
+                label={copy.languageRequirement}
                 value={currentAdmissions.languageRequirement}
               />
               <InfoPanel
-                label="Academic requirement"
+                label={copy.academicRequirement}
                 value={currentAdmissions.academicRequirement}
               />
             </div>
@@ -154,7 +160,7 @@ export default function UniversityDetailAdmissions({
               {currentPathLabel ? (
                 <div className="mb-5 rounded-3xl border bg-background px-4 py-4 transition-colors duration-200 hover:bg-muted/40">
                   <p className="text-muted-foreground text-xs uppercase tracking-[0.2em]">
-                    Current path
+                    {copy.currentPath}
                   </p>
                   <p className="mt-2 text-sm font-medium leading-6 text-foreground">
                     {currentPathLabel}
@@ -162,7 +168,7 @@ export default function UniversityDetailAdmissions({
                 </div>
               ) : null}
               <p className="text-sm font-medium text-foreground">
-                Required documents
+                {copy.requiredDocuments}
               </p>
               <div className="mt-4 flex flex-col gap-2">
                 {currentAdmissions.requiredDocuments.map((doc) => (
@@ -176,7 +182,7 @@ export default function UniversityDetailAdmissions({
               </div>
               <div className="mt-6 rounded-3xl border bg-muted/25 p-5 text-slate-900 transition-all duration-200 hover:-translate-y-0.5 hover:border-slate-300 hover:bg-muted/45">
                 <p className="text-sm font-medium text-foreground">
-                  Scholarship angle
+                  {copy.scholarshipAngle}
                 </p>
                 <p className="text-muted-foreground mt-2 text-sm leading-6">
                   {currentAdmissions.scholarship}

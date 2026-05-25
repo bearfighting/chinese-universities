@@ -1,17 +1,34 @@
-import UniversityDetailPage, {
-  generateStaticParams as generateSlugParams,
-} from "@/app/universities/[slug]/page";
-import { locales } from "@/lib/i18n/config";
+import { connection } from "next/server";
+import { notFound } from "next/navigation";
+
+import UniversityDetailPageContent from "@/components/university/university-detail-page-content";
+import { isLocale, locales } from "@/lib/i18n/config";
+import { universityPreviewData } from "@/lib/university-preview-data";
+import { getUniversityDetailPageData } from "@/lib/universities/get-university-detail-page-data";
+
+export const dynamic = "force-dynamic";
 
 export async function generateStaticParams() {
-  const slugParams = await generateSlugParams();
-
   return locales.flatMap((locale) =>
-    slugParams.map((params) => ({
+    universityPreviewData.map((university) => ({
       locale,
-      slug: params.slug,
+      slug: university.slug,
     })),
   );
 }
 
-export default UniversityDetailPage;
+export default async function LocalizedUniversityDetailPage(
+  props: PageProps<"/[locale]/universities/[slug]">,
+) {
+  await connection();
+
+  const { locale, slug } = await props.params;
+
+  if (!isLocale(locale)) {
+    notFound();
+  }
+
+  const data = await getUniversityDetailPageData(slug, locale);
+
+  return <UniversityDetailPageContent {...data} />;
+}

@@ -1,6 +1,7 @@
 import { connection } from "next/server";
 
 import UniversityDetailPageContent from "@/components/university/university-detail-page-content";
+import { defaultLocale } from "@/lib/i18n/config";
 import { universityPreviewData } from "@/lib/university-preview-data";
 import { getUniversityDetailPageData } from "@/lib/universities/get-university-detail-page-data";
 
@@ -18,7 +19,7 @@ export default async function UniversityDetailPage(
   await connection();
 
   const { slug } = await props.params;
-  const data = await getUniversityDetailPageData(slug);
+  const data = await getUniversityDetailPageData(slug, defaultLocale);
 
   return <UniversityDetailPageContent {...data} />;
 }

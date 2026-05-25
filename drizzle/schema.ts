@@ -103,6 +103,8 @@ export const university_profiles = pgTable("university_profiles", {
 	university_id: uuid().notNull(),
 	hero_summary: text(),
 	overview: text(),
+	overview_en: text(),
+	overview_zh: text(),
 	city_pitch: text(),
 	tuition_summary: text(),
 	accommodation_summary: text(),

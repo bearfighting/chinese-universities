@@ -18,6 +18,7 @@ import {
   getUniversityPreviewBySlug,
   type UniversityPreview,
 } from "@/lib/university-preview-data";
+import { defaultLocale, type Locale } from "@/lib/i18n/config";
 import { toUniversityRankingView } from "@/lib/university-rankings";
 import {
   mapAdmissionsPanels,
@@ -39,6 +40,7 @@ export type UniversityDetailPageData = {
 
 export async function getUniversityDetailPageData(
   slug: string,
+  locale: Locale = defaultLocale,
 ): Promise<UniversityDetailPageData> {
   const previewUniversity = getUniversityPreviewBySlug(slug);
 
@@ -174,7 +176,11 @@ export async function getUniversityDetailPageData(
     website: databaseUniversity.website ?? fallbackUniversity.website,
     tuitionRange: profileRow?.tuition_summary ?? fallbackUniversity.tuitionRange,
     heroSummary: profileRow?.hero_summary ?? fallbackUniversity.heroSummary,
-    overview: profileRow?.overview ?? fallbackUniversity.overview,
+    overview:
+      (locale === "zh"
+        ? profileRow?.overview_zh
+        : profileRow?.overview_en ?? profileRow?.overview) ??
+      fallbackUniversity.overview,
     cityPitch: profileRow?.city_pitch ?? fallbackUniversity.cityPitch,
   };
 

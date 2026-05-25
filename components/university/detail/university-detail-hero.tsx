@@ -13,8 +13,9 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import type { UniversityPreview } from "@/lib/university-preview-data";
+import { getDictionary } from "@/lib/i18n/dictionaries";
 import { getLocaleFromPathname } from "@/lib/i18n/config";
+import type { UniversityPreview } from "@/lib/university-preview-data";
 import type { UniversityRankingView } from "@/lib/university-rankings";
 
 const universityHeroImages: Record<string, string> = {
@@ -52,6 +53,7 @@ export default function UniversityDetailHero({
 }: Props) {
   const pathname = usePathname();
   const locale = getLocaleFromPathname(pathname);
+  const copy = getDictionary(locale).universityDetail.hero;
   const heroImagePath = getUniversityHeroImagePath(university.slug);
   const motto = locale === "zh" ? university.mottoZh : university.mottoEn;
 
@@ -121,11 +123,11 @@ export default function UniversityDetailHero({
             </div>
 
             <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
-              <HeroFact label="City" value={university.city} />
-              <HeroFact label="Region" value={university.region} />
-              <HeroFact label="Tuition range" value={university.tuitionRange} />
+              <HeroFact label={copy.city} value={university.city} />
+              <HeroFact label={copy.region} value={university.region} />
+              <HeroFact label={copy.tuitionRange} value={university.tuitionRange} />
               <HeroFact
-                label="Founded"
+                label={copy.founded}
                 value={String(university.establishedYear)}
               />
             </div>
@@ -141,7 +143,7 @@ export default function UniversityDetailHero({
                   rel="noopener noreferrer"
                   target="_blank"
                 >
-                  Official Website
+                  {copy.officialWebsite}
                 </a>
               </Button>
               <Button
@@ -150,7 +152,7 @@ export default function UniversityDetailHero({
                 size="lg"
                 className="border-white/20 bg-white/5 text-white hover:bg-white/10"
               >
-                <Link href="/universities">Back to Universities</Link>
+                <Link href="/universities">{copy.backToUniversities}</Link>
               </Button>
             </div>
           </div>
@@ -169,14 +171,14 @@ export default function UniversityDetailHero({
                   <div className="absolute inset-x-0 bottom-0 flex items-end justify-between gap-4 p-5">
                     <div>
                       <p className="text-sm font-medium text-white/70">
-                        Campus view
+                        {copy.campusView}
                       </p>
                       <p className="mt-1 text-lg font-semibold text-white">
                         {university.city}
                       </p>
                     </div>
                     <Badge className="rounded-full border-white/12 bg-white/12 text-white">
-                      {classifications[0] ?? "Featured"}
+                      {classifications[0] ?? copy.featured}
                     </Badge>
                   </div>
                 </div>
@@ -195,10 +197,9 @@ export default function UniversityDetailHero({
 
             <Card className="border-white/10 bg-white/6 text-white shadow-2xl backdrop-blur-sm">
               <CardHeader className="gap-2">
-                <CardTitle className="text-white">Ranking Snapshot</CardTitle>
+                <CardTitle className="text-white">{copy.rankingSnapshot}</CardTitle>
                 <CardDescription className="text-white/70">
-                  A compact version of the top-of-page summary card you can
-                  reuse across all schools.
+                  {copy.rankingDescription}
                 </CardDescription>
               </CardHeader>
               <CardContent className="grid gap-3">

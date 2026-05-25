@@ -62,6 +62,63 @@ const dictionaries = {
       officialSite: "Official Site",
       viewDetails: "View Details",
     },
+    universityDetail: {
+      hero: {
+        city: "City",
+        region: "Region",
+        tuitionRange: "Tuition range",
+        founded: "Founded",
+        officialWebsite: "Official Website",
+        backToUniversities: "Back to Universities",
+        campusView: "Campus view",
+        featured: "Featured",
+        rankingSnapshot: "Ranking Snapshot",
+        rankingDescription:
+          "A compact version of the top-of-page summary card you can reuse across all schools.",
+      },
+      overview: {
+        badge: "Overview",
+        title: "Why this university stands out",
+        description:
+          "This section helps the page feel editorial and useful before the user reaches the admissions detail.",
+        cityAdvantage: "City advantage",
+        campusHighlights: "Campus highlights",
+        quickFacts: "Quick facts",
+      },
+      admissions: {
+        badge: "Admissions Requirements",
+        titleReal: "Admissions requirements and application path",
+        titleFallback: "Degree and language tabs preview",
+        descriptionReal:
+          "Switch between the available degree and language combinations to view deadlines, requirements, and document lists from the current admissions dataset.",
+        descriptionFallback:
+          "This is a static mock, but the interaction model is real. It is a good way to test readability before wiring the database.",
+        degreeLevel: "Degree level",
+        teachingLanguage: "Teaching language",
+        tuition: "Tuition",
+        programDuration: "Program duration",
+        intake: "Intake",
+        applicationDeadline: "Application deadline",
+        languageRequirement: "Language requirement",
+        academicRequirement: "Academic requirement",
+        currentPath: "Current path",
+        requiredDocuments: "Required documents",
+        scholarshipAngle: "Scholarship angle",
+      },
+      secondary: {
+        scholarshipsBadge: "Scholarships",
+        scholarshipTitleReal: "Scholarships for international applicants",
+        scholarshipTitleFallback: "Funding should be visible, not buried",
+        scholarshipDescriptionReal:
+          "These scholarship options are pulled from the current admissions data available for this university.",
+        scholarshipDescriptionFallback:
+          "Even before the data is real, showing the layout helps us test whether the page feels actionable.",
+        studentLifeBadge: "Student Life",
+        studentLifeTitle: "The page should help users imagine living there",
+        studentLifeDescription:
+          "This section gives emotional depth so the page is not only a database dump.",
+      },
+    },
   },
   zh: {
     nav: {
@@ -121,6 +178,61 @@ const dictionaries = {
       unknownCity: "未知",
       officialSite: "官网",
       viewDetails: "查看详情",
+    },
+    universityDetail: {
+      hero: {
+        city: "城市",
+        region: "地区",
+        tuitionRange: "学费范围",
+        founded: "建校时间",
+        officialWebsite: "官方网站",
+        backToUniversities: "返回大学列表",
+        campusView: "校园景观",
+        featured: "推荐",
+        rankingSnapshot: "排名概览",
+        rankingDescription: "这是一个可在各校复用的顶部摘要卡片。",
+      },
+      overview: {
+        badge: "概览",
+        title: "为什么这所大学值得关注",
+        description: "这一部分会在用户进入招生细节前，先建立整体理解。",
+        cityAdvantage: "城市优势",
+        campusHighlights: "校园亮点",
+        quickFacts: "快速信息",
+      },
+      admissions: {
+        badge: "招生要求",
+        titleReal: "招生要求与申请路径",
+        titleFallback: "学位与授课语言切换预览",
+        descriptionReal:
+          "切换可选的学位和授课语言组合，以查看当前招生数据中的截止时间、要求和材料清单。",
+        descriptionFallback:
+          "这部分目前仍可作为交互预览，用来在接入数据库前测试可读性。",
+        degreeLevel: "学位层次",
+        teachingLanguage: "授课语言",
+        tuition: "学费",
+        programDuration: "学制",
+        intake: "入学时间",
+        applicationDeadline: "申请截止时间",
+        languageRequirement: "语言要求",
+        academicRequirement: "学术要求",
+        currentPath: "当前路径",
+        requiredDocuments: "申请材料",
+        scholarshipAngle: "奖学金信息",
+      },
+      secondary: {
+        scholarshipsBadge: "奖学金",
+        scholarshipTitleReal: "国际学生奖学金",
+        scholarshipTitleFallback: "奖助信息不应被埋没",
+        scholarshipDescriptionReal:
+          "这些奖学金信息来自该校当前可用的招生数据。",
+        scholarshipDescriptionFallback:
+          "即使数据还不完整，这种版式也能帮助我们判断页面是否足够实用。",
+        studentLifeBadge: "学生生活",
+        studentLifeTitle: "页面应帮助用户想象在这里生活",
+        studentLifeDescription:
+          "这一部分增加情感和生活感，而不只是信息堆砌。",
+      },
     },
   },
 } as const;

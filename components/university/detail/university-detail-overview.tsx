@@ -1,5 +1,7 @@
 "use client";
 
+import { usePathname } from "next/navigation";
+
 import { Badge } from "@/components/ui/badge";
 import {
   Card,
@@ -8,6 +10,8 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import { getDictionary } from "@/lib/i18n/dictionaries";
+import { getLocaleFromPathname } from "@/lib/i18n/config";
 import type { UniversityPreview } from "@/lib/university-preview-data";
 
 type Props = {
@@ -15,18 +19,18 @@ type Props = {
 };
 
 export default function UniversityDetailOverview({ university }: Props) {
+  const locale = getLocaleFromPathname(usePathname());
+  const copy = getDictionary(locale).universityDetail.overview;
+
   return (
     <div className="grid gap-6 lg:grid-cols-[1.3fr_0.7fr]">
       <Card className="bg-card transition-all duration-200 hover:-translate-y-0.5 hover:border-slate-300">
         <CardHeader className="gap-3">
           <Badge variant="outline" className="w-fit rounded-full px-3 py-1">
-            Overview
+            {copy.badge}
           </Badge>
-          <CardTitle className="text-2xl">Why this university stands out</CardTitle>
-          <CardDescription>
-            This section helps the page feel editorial and useful before the
-            user reaches the admissions detail.
-          </CardDescription>
+          <CardTitle className="text-2xl">{copy.title}</CardTitle>
+          <CardDescription>{copy.description}</CardDescription>
         </CardHeader>
         <CardContent className="grid gap-6">
           <p className="text-muted-foreground text-base leading-7">
@@ -35,7 +39,7 @@ export default function UniversityDetailOverview({ university }: Props) {
           <div className="grid gap-5 md:grid-cols-2">
             <div className="rounded-3xl border bg-muted/40 p-5 transition-all duration-200 hover:-translate-y-0.5 hover:border-slate-300 hover:bg-muted/60">
               <p className="text-sm font-medium text-foreground">
-                City advantage
+                {copy.cityAdvantage}
               </p>
               <p className="text-muted-foreground mt-2 text-sm leading-6">
                 {university.cityPitch}
@@ -43,7 +47,7 @@ export default function UniversityDetailOverview({ university }: Props) {
             </div>
             <div className="rounded-3xl border bg-muted/40 p-5 transition-all duration-200 hover:-translate-y-0.5 hover:border-slate-300 hover:bg-muted/60">
               <p className="text-sm font-medium text-foreground">
-                Campus highlights
+                {copy.campusHighlights}
               </p>
               <div className="mt-3 flex flex-col gap-2">
                 {university.campusHighlights.map((item) => (
@@ -63,7 +67,7 @@ export default function UniversityDetailOverview({ university }: Props) {
       <Card className="bg-card transition-all duration-200 hover:-translate-y-0.5 hover:border-slate-300">
         <CardHeader>
           <Badge variant="outline" className="w-fit rounded-full px-3 py-1">
-            Quick facts
+            {copy.quickFacts}
           </Badge>
         </CardHeader>
         <CardContent className="grid gap-3">

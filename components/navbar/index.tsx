@@ -37,11 +37,11 @@ export default function Navbar() {
 
   return (
     <header className="sticky top-0 z-50 w-full border-b border-border/70 bg-background/82 backdrop-blur-xl">
-      <div className="mx-auto hidden min-h-18 w-full max-w-[96rem] items-center gap-4 px-5 py-3 xl:flex 2xl:px-6">
+      <div className="mx-auto hidden min-h-18 w-full max-w-[96rem] items-center gap-3 px-5 py-3 xl:flex 2xl:px-6">
         <BrandLockup detailed locale={locale} />
 
-        <nav className="min-w-0 flex-[1.15]">
-          <div className="flex items-center justify-center rounded-full border border-border/80 bg-background/92 p-1 shadow-[0_1px_2px_rgba(15,23,42,0.03)]">
+        <nav className="min-w-0 flex-1 overflow-hidden">
+          <div className="flex items-center justify-start gap-0.5 overflow-x-auto rounded-full border border-border/80 bg-background/92 px-2 py-1 shadow-[0_1px_2px_rgba(15,23,42,0.03)] [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden 2xl:justify-center">
             {navigation.map((item) => {
               const localizedHref = localizeHref(locale, item.href);
               const isActive =
@@ -54,7 +54,7 @@ export default function Navbar() {
                   href={localizedHref}
                   aria-current={isActive ? "page" : undefined}
                   className={cn(
-                    "inline-flex min-h-11 shrink-0 items-center justify-center rounded-full px-3.5 py-2.5 text-sm font-medium whitespace-nowrap transition-all 2xl:px-4.5",
+                    "inline-flex min-h-11 shrink-0 items-center justify-center rounded-full px-3 py-2.5 text-sm font-medium whitespace-nowrap transition-all 2xl:px-4",
                     isActive
                       ? "bg-secondary text-foreground shadow-[inset_0_1px_0_rgba(255,255,255,0.7)]"
                       : "text-muted-foreground hover:bg-muted hover:text-foreground",
@@ -67,9 +67,9 @@ export default function Navbar() {
           </div>
         </nav>
 
-        <div className="ml-auto flex items-center gap-3">
+        <div className="ml-auto flex min-w-0 shrink-0 items-center gap-2.5">
           <LanguageSwitch locale={locale} pathname={pathname} />
-          <div className="w-full max-w-[22rem] 2xl:max-w-[24rem]">
+          <div className="min-w-0 w-[min(22rem,24vw)] max-w-[24rem] 2xl:w-[24rem]">
             <SearchChrome
               href={localizeHref(locale, "/search")}
               locale={locale}

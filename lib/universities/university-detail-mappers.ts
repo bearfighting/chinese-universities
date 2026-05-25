@@ -21,6 +21,8 @@ export function toFallbackUniversityPreview(databaseUniversity: {
     slug: databaseUniversity.slug ?? "university",
     englishName: databaseUniversity.englishName ?? databaseUniversity.chineseName,
     chineseName: databaseUniversity.chineseName,
+    mottoZh: null,
+    mottoEn: null,
     city: databaseUniversity.city ?? "Unknown",
     region: databaseUniversity.region,
     establishedYear: databaseUniversity.establishedYear ?? 0,

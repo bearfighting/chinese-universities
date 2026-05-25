@@ -9,6 +9,7 @@ import {
   university_admission_events,
   university_admission_tracks,
   university_classifications,
+  university_mottos,
   university_profiles,
   university_rankings,
   university_scholarships,
@@ -22,6 +23,13 @@ import {
   mapAdmissionsPanels,
   toFallbackUniversityPreview,
 } from "@/lib/universities/university-detail-mappers";
+
+const classificationDisplayOrder = [
+  "C9",
+  "985",
+  "211",
+  "DOUBLE_FIRST_CLASS",
+] as const;
 
 export type UniversityDetailPageData = {
   university: UniversityPreview;
@@ -55,6 +63,7 @@ export async function getUniversityDetailPageData(
   const [
     rankings,
     classificationRows,
+    [mottoRow],
     [profileRow],
     admissionTracks,
     scholarshipRows,
@@ -83,6 +92,11 @@ export async function getUniversityDetailPageData(
       )
       .where(eq(university_classifications.university_id, databaseUniversity.id))
       .orderBy(asc(classifications.code)),
+    db
+      .select()
+      .from(university_mottos)
+      .where(eq(university_mottos.university_id, databaseUniversity.id))
+      .limit(1),
     db
       .select()
       .from(university_profiles)
@@ -147,6 +161,8 @@ export async function getUniversityDetailPageData(
       databaseUniversity.englishName ?? fallbackUniversity.englishName,
     chineseName:
       databaseUniversity.chineseName ?? fallbackUniversity.chineseName,
+    mottoZh: mottoRow?.motto_zh ?? fallbackUniversity.mottoZh ?? null,
+    mottoEn: mottoRow?.motto_en ?? fallbackUniversity.mottoEn ?? null,
     city: databaseUniversity.city ?? fallbackUniversity.city,
     region: databaseUniversity.region ?? fallbackUniversity.region,
     establishedYear:
@@ -198,6 +214,8 @@ export async function getUniversityDetailPageData(
       scholarships,
     },
     rankings: rankingViews,
-    classifications: classificationRows.map((classification) => classification.code),
+    classifications: classificationDisplayOrder.filter((code) =>
+      classificationRows.some((classification) => classification.code === code),
+    ),
   };
 }

@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -13,6 +14,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import type { UniversityPreview } from "@/lib/university-preview-data";
+import { getLocaleFromPathname } from "@/lib/i18n/config";
 import type { UniversityRankingView } from "@/lib/university-rankings";
 
 const universityHeroImages: Record<string, string> = {
@@ -48,7 +50,10 @@ export default function UniversityDetailHero({
   rankings,
   classifications,
 }: Props) {
+  const pathname = usePathname();
+  const locale = getLocaleFromPathname(pathname);
   const heroImagePath = getUniversityHeroImagePath(university.slug);
+  const motto = locale === "zh" ? university.mottoZh : university.mottoEn;
 
   return (
     <section className="relative overflow-hidden border-b bg-[linear-gradient(135deg,rgba(17,24,39,0.98),rgba(31,41,55,0.94)_45%,rgba(120,53,15,0.86))] text-white">
@@ -78,14 +83,19 @@ export default function UniversityDetailHero({
                   className="h-12 w-auto object-contain"
                 />
               </div>
-              <div className="space-y-1">
-                <p className="text-sm uppercase tracking-[0.3em] text-white/60">
-                  University Preview
-                </p>
-                <p className="text-sm text-white/72">
-                  A richer hero with campus imagery and real ranking data
-                </p>
-              </div>
+              {motto ? (
+                <div className="space-y-1">
+                  <p
+                    className={
+                      locale === "zh"
+                        ? "text-sm font-medium tracking-[0.08em] text-white/88"
+                        : "text-sm italic text-white/68"
+                    }
+                  >
+                    {motto}
+                  </p>
+                </div>
+              ) : null}
             </div>
 
             <div className="flex flex-wrap gap-2">

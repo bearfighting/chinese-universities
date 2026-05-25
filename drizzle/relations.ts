@@ -1,5 +1,5 @@
 import { relations } from "drizzle-orm/relations";
-import { universities, university_classifications, classifications, source_documents, university_profiles, university_admission_tracks, university_admission_events, university_admission_documents, university_scholarships } from "./schema";
+import { universities, university_classifications, classifications, source_documents, university_profiles, university_mottos, university_admission_tracks, university_admission_events, university_admission_documents, university_scholarships } from "./schema";
 
 export const university_classificationsRelations = relations(university_classifications, ({one}) => ({
 	university: one(universities, {
@@ -16,6 +16,7 @@ export const universitiesRelations = relations(universities, ({many}) => ({
 	university_classifications: many(university_classifications),
 	source_documents: many(source_documents),
 	university_profiles: many(university_profiles),
+	university_mottos: many(university_mottos),
 	university_admission_tracks: many(university_admission_tracks),
 	university_scholarships: many(university_scholarships),
 }));
@@ -35,6 +36,13 @@ export const source_documentsRelations = relations(source_documents, ({one, many
 export const university_profilesRelations = relations(university_profiles, ({one}) => ({
 	university: one(universities, {
 		fields: [university_profiles.university_id],
+		references: [universities.id]
+	}),
+}));
+
+export const university_mottosRelations = relations(university_mottos, ({one}) => ({
+	university: one(universities, {
+		fields: [university_mottos.university_id],
 		references: [universities.id]
 	}),
 }));

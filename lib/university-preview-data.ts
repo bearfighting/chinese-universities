@@ -19,6 +19,8 @@ export type UniversityPreview = {
   slug: string;
   englishName: string;
   chineseName: string;
+  mottoZh?: string | null;
+  mottoEn?: string | null;
   city: string;
   region: string;
   establishedYear: number;

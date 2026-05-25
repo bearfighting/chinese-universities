@@ -123,6 +123,22 @@ export const university_profiles = pgTable("university_profiles", {
 			columns: [table.university_id],
 			foreignColumns: [universities.id],
 			name: "university_profiles_university_id_fkey"
+	}).onDelete("cascade"),
+]);
+
+export const university_mottos = pgTable("university_mottos", {
+	id: uuid().defaultRandom().primaryKey().notNull(),
+	university_id: uuid().notNull(),
+	motto_zh: text(),
+	motto_en: text(),
+	created_at: timestamp({ mode: 'string' }).defaultNow(),
+	updated_at: timestamp({ mode: 'string' }).defaultNow(),
+}, (table) => [
+	unique("university_mottos_university_id_key").on(table.university_id),
+	foreignKey({
+			columns: [table.university_id],
+			foreignColumns: [universities.id],
+			name: "university_mottos_university_id_fkey"
 		}).onDelete("cascade"),
 ]);
 

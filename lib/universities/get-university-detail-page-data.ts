@@ -60,10 +60,18 @@ export async function getUniversityDetailPageData(
     notFound();
   }
 
+  const mottoRowPromise = db
+    .select()
+    .from(university_mottos)
+    .where(eq(university_mottos.university_id, databaseUniversity.id))
+    .limit(1)
+    .then((rows) => rows[0] ?? null)
+    .catch(() => null);
+
   const [
     rankings,
     classificationRows,
-    [mottoRow],
+    mottoRow,
     [profileRow],
     admissionTracks,
     scholarshipRows,
@@ -92,11 +100,7 @@ export async function getUniversityDetailPageData(
       )
       .where(eq(university_classifications.university_id, databaseUniversity.id))
       .orderBy(asc(classifications.code)),
-    db
-      .select()
-      .from(university_mottos)
-      .where(eq(university_mottos.university_id, databaseUniversity.id))
-      .limit(1),
+    mottoRowPromise,
     db
       .select()
       .from(university_profiles)

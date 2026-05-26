@@ -3,7 +3,7 @@ import Link from "next/link";
 
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { localizeHref, type Locale } from "@/lib/i18n/config";
 import type { AppDictionary } from "@/lib/i18n/dictionaries";
 import type { UniversityRankingView } from "@/lib/university-rankings";
@@ -44,8 +44,7 @@ export default function UniversityListCard({
   locale,
 }: Props) {
   const englishName = university.name ?? university.chineseName;
-  const primaryName = locale === "zh" ? university.chineseName : englishName;
-  const secondaryName = locale === "zh" ? englishName : university.chineseName;
+  const displayName = locale === "zh" ? university.chineseName : englishName;
   const rankingLabel =
     locale === "zh"
       ? (rankingLabelZhMap[university.primaryRanking?.label ?? ""] ??
@@ -77,13 +76,8 @@ export default function UniversityListCard({
         </Badge>
         <div className="space-y-1">
           <CardTitle className="text-lg transition-colors duration-300 group-hover:text-slate-900">
-            {primaryName}
+            {displayName}
           </CardTitle>
-          {secondaryName ? (
-            <CardDescription className="text-base text-foreground/80 transition-colors duration-300 group-hover:text-foreground/90">
-              {secondaryName}
-            </CardDescription>
-          ) : null}
         </div>
       </CardHeader>
 

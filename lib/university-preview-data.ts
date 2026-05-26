@@ -41,6 +41,9 @@ export type UniversityPreview = {
     label: string;
     value: string;
   }[];
+  strengths: string[];
+  environment: string[];
+  bestFit: string[];
   admissions: AdmissionsPanel[];
   scholarships: {
     title: string;
@@ -195,6 +198,18 @@ export const universityPreviewData: UniversityPreview[] = [
       { label: "Campus language mix", value: "Chinese-first with strong international programs" },
       { label: "Best for", value: "Applicants seeking prestige plus broad major choice" },
     ],
+    strengths: [
+      "Humanities and social sciences",
+      "Fundamental sciences",
+    ],
+    environment: [
+      "Intellectual and academic",
+      "Discussion-oriented",
+    ],
+    bestFit: [
+      "Students seeking broad academic strength across top disciplines",
+      "Applicants interested in humanities, sciences, and public policy",
+    ],
     admissions: sharedAdmissions,
     scholarships: [
       {
@@ -255,6 +270,18 @@ export const universityPreviewData: UniversityPreview[] = [
       { label: "Primary strength", value: "Engineering and technology" },
       { label: "Campus language mix", value: "Chinese core with selective English graduate offerings" },
       { label: "Best for", value: "Applicants prioritizing STEM reputation" },
+    ],
+    strengths: [
+      "Engineering and technology",
+      "Computer science",
+    ],
+    environment: [
+      "Highly competitive",
+      "Research-intensive",
+    ],
+    bestFit: [
+      "Students targeting elite engineering and technology programs",
+      "Applicants who want a highly competitive research environment",
     ],
     admissions: sharedAdmissions,
     scholarships: [
@@ -317,6 +344,18 @@ export const universityPreviewData: UniversityPreview[] = [
       { label: "Campus language mix", value: "Internationally friendly city context" },
       { label: "Best for", value: "Applicants wanting top academics plus Shanghai lifestyle" },
     ],
+    strengths: [
+      "Economics and business",
+      "Medical sciences",
+    ],
+    environment: [
+      "Internationalized",
+      "Urban and modern",
+    ],
+    bestFit: [
+      "Students seeking academics with strong international exposure",
+      "Applicants who want to study in Shanghai",
+    ],
     admissions: sharedAdmissions,
     scholarships: [
       {
@@ -377,6 +416,18 @@ export const universityPreviewData: UniversityPreview[] = [
       { label: "Primary strength", value: "Engineering, business, medicine" },
       { label: "Campus language mix", value: "Strong graduate-level international exposure" },
       { label: "Best for", value: "Applicants seeking high-performance academics with Shanghai access" },
+    ],
+    strengths: [
+      "Engineering and manufacturing",
+      "Industry collaboration",
+    ],
+    environment: [
+      "Professional and technical",
+      "Career-oriented",
+    ],
+    bestFit: [
+      "Students focused on engineering and applied research",
+      "Applicants seeking strong industry connections",
     ],
     admissions: sharedAdmissions,
     scholarships: [
@@ -439,6 +490,18 @@ export const universityPreviewData: UniversityPreview[] = [
       { label: "Campus language mix", value: "Accessible for both Chinese and international applicants" },
       { label: "Best for", value: "Applicants wanting prestige, balance, and lifestyle" },
     ],
+    strengths: [
+      "Entrepreneurship and innovation",
+      "AI and digital economy",
+    ],
+    environment: [
+      "Innovative and ambitious",
+      "Entrepreneurial",
+    ],
+    bestFit: [
+      "Students interested in innovation and entrepreneurship",
+      "Applicants drawn to Hangzhou's tech ecosystem",
+    ],
     admissions: sharedAdmissions,
     scholarships: [
       {
@@ -499,6 +562,18 @@ export const universityPreviewData: UniversityPreview[] = [
       { label: "Primary strength", value: "Fundamental science and research" },
       { label: "Campus language mix", value: "Graduate and research-heavy international positioning" },
       { label: "Best for", value: "Applicants optimizing for academic depth over city prestige" },
+    ],
+    strengths: [
+      "Physics and mathematics",
+      "Advanced scientific research",
+    ],
+    environment: [
+      "Highly research-intensive",
+      "Academically rigorous",
+    ],
+    bestFit: [
+      "Students focused on science and research intensity",
+      "Applicants seeking elite scientific training",
     ],
     admissions: sharedAdmissions,
     scholarships: [
@@ -561,6 +636,18 @@ export const universityPreviewData: UniversityPreview[] = [
       { label: "Campus language mix", value: "Traditional academic culture with growing international pathways" },
       { label: "Best for", value: "Applicants seeking depth, heritage, and a calmer city" },
     ],
+    strengths: [
+      "Fundamental sciences",
+      "Academic research",
+    ],
+    environment: [
+      "Quiet and academic",
+      "Traditional scholarly atmosphere",
+    ],
+    bestFit: [
+      "Students valuing academic depth and traditional scholarship",
+      "Applicants preferring a quieter research-focused culture",
+    ],
     admissions: sharedAdmissions,
     scholarships: [
       {
@@ -622,6 +709,18 @@ export const universityPreviewData: UniversityPreview[] = [
       { label: "Campus language mix", value: "Chinese-led with selective international routes" },
       { label: "Best for", value: "Applicants who care about value, rigor, and cultural immersion" },
     ],
+    strengths: [
+      "Mechanical and energy engineering",
+      "National strategic research",
+    ],
+    environment: [
+      "Traditional academic culture",
+      "Stable and research-oriented",
+    ],
+    bestFit: [
+      "Students seeking strong traditional engineering education",
+      "Applicants interested in western China's academic environment",
+    ],
     admissions: sharedAdmissions,
     scholarships: [
       {
@@ -682,6 +781,18 @@ export const universityPreviewData: UniversityPreview[] = [
       { label: "Primary strength", value: "Aerospace and advanced engineering" },
       { label: "Campus language mix", value: "Research- and engineering-centered" },
       { label: "Best for", value: "Applicants seeking serious technical reputation and value" },
+    ],
+    strengths: [
+      "Aerospace engineering",
+      "Advanced manufacturing",
+    ],
+    environment: [
+      "Technical and practical",
+      "Industrial engineering culture",
+    ],
+    bestFit: [
+      "Students seeking serious engineering training",
+      "Applicants interested in aerospace and robotics",
     ],
     admissions: sharedAdmissions,
     scholarships: [

@@ -1,6 +1,8 @@
 import { asc, eq, inArray } from "drizzle-orm";
 import { notFound } from "next/navigation";
 
+import positionSummaryData from "@/data/mock/position_summary.json";
+import strengthEnvironmentBestFitData from "@/data/mock/strengh_environment_bestfit.json";
 import { db } from "@/lib/db";
 import {
   classifications,
@@ -32,6 +34,38 @@ const classificationDisplayOrder = [
   "DOUBLE_FIRST_CLASS",
 ] as const;
 
+type PositionSummaryEntry = {
+  slug: string;
+  positioning_summary?: {
+    en?: string;
+    zh?: string;
+  };
+};
+
+type StrengthEnvironmentBestFitEntry = {
+  slug: string;
+  strengths?: {
+    en?: string[];
+    zh?: string[];
+  };
+  environment?: {
+    en?: string[];
+    zh?: string[];
+  };
+  best_fit?: {
+    en?: string[];
+    zh?: string[];
+  };
+};
+
+const positionSummarySlugAliases: Record<string, string> = {
+  ustc: "university-of-science-and-technology-of-china",
+};
+
+const strengthEnvironmentBestFitSlugAliases: Record<string, string> = {
+  ustc: "university-of-science-and-technology-of-china",
+};
+
 export type UniversityDetailPageData = {
   university: UniversityPreview;
   rankings: ReturnType<typeof toUniversityRankingView>[];
@@ -43,8 +77,10 @@ export async function getUniversityDetailPageData(
   locale: Locale = defaultLocale,
 ): Promise<UniversityDetailPageData> {
   const previewUniversity = getUniversityPreviewBySlug(slug);
+  const positionSummary = getPositioningSummary(slug, locale);
+  const profileChips = getStrengthEnvironmentBestFit(slug, locale);
 
-  const [databaseUniversity] = await db
+  const databaseUniversity = await db
     .select({
       id: universities.id,
       englishName: universities.name_en,
@@ -56,10 +92,20 @@ export async function getUniversityDetailPageData(
       slug: universities.slug,
     })
     .from(universities)
-    .where(eq(universities.slug, slug));
+    .where(eq(universities.slug, slug))
+    .then((rows) => rows[0] ?? null)
+    .catch(() => null);
 
   if (!databaseUniversity) {
-    notFound();
+    if (!previewUniversity) {
+      notFound();
+    }
+
+    return buildPreviewUniversityDetailPageData(
+      previewUniversity,
+      positionSummary,
+      profileChips,
+    );
   }
 
   const mottoRowPromise = db
@@ -70,11 +116,42 @@ export async function getUniversityDetailPageData(
     .then((rows) => rows[0] ?? null)
     .catch(() => null);
 
+  const scholarshipRowsPromise = db
+    .select()
+    .from(university_scholarships)
+    .where(eq(university_scholarships.university_id, databaseUniversity.id))
+    .orderBy(
+      asc(university_scholarships.academic_year),
+      asc(university_scholarships.sort_order),
+    )
+    .catch(() => []);
+
+  const profileRowPromise = db
+    .select()
+    .from(university_profiles)
+    .where(eq(university_profiles.university_id, databaseUniversity.id))
+    .limit(1)
+    .then((rows) => rows[0] ?? null)
+    .catch(() => null);
+
+  const classificationRowsPromise = db
+    .select({
+      code: classifications.code,
+    })
+    .from(university_classifications)
+    .innerJoin(
+      classifications,
+      eq(classifications.id, university_classifications.classification_id),
+    )
+    .where(eq(university_classifications.university_id, databaseUniversity.id))
+    .orderBy(asc(classifications.code))
+    .catch(() => []);
+
   const [
     rankings,
     classificationRows,
     mottoRow,
-    [profileRow],
+    profileRow,
     admissionTracks,
     scholarshipRows,
   ] = await Promise.all([
@@ -91,23 +168,9 @@ export async function getUniversityDetailPageData(
       .from(university_rankings)
       .where(eq(university_rankings.university_id, databaseUniversity.id))
       .orderBy(asc(university_rankings.system), asc(university_rankings.year)),
-    db
-      .select({
-        code: classifications.code,
-      })
-      .from(university_classifications)
-      .innerJoin(
-        classifications,
-        eq(classifications.id, university_classifications.classification_id),
-      )
-      .where(eq(university_classifications.university_id, databaseUniversity.id))
-      .orderBy(asc(classifications.code)),
+    classificationRowsPromise,
     mottoRowPromise,
-    db
-      .select()
-      .from(university_profiles)
-      .where(eq(university_profiles.university_id, databaseUniversity.id))
-      .limit(1),
+    profileRowPromise,
     db
       .select()
       .from(university_admission_tracks)
@@ -117,14 +180,7 @@ export async function getUniversityDetailPageData(
         asc(university_admission_tracks.degree_level),
         asc(university_admission_tracks.track_code),
       ),
-    db
-      .select()
-      .from(university_scholarships)
-      .where(eq(university_scholarships.university_id, databaseUniversity.id))
-      .orderBy(
-        asc(university_scholarships.academic_year),
-        asc(university_scholarships.sort_order),
-      ),
+    scholarshipRowsPromise,
   ]);
 
   const trackIds = admissionTracks.map((track) => track.id);
@@ -175,7 +231,22 @@ export async function getUniversityDetailPageData(
       databaseUniversity.establishedYear ?? fallbackUniversity.establishedYear,
     website: databaseUniversity.website ?? fallbackUniversity.website,
     tuitionRange: profileRow?.tuition_summary ?? fallbackUniversity.tuitionRange,
-    heroSummary: profileRow?.hero_summary ?? fallbackUniversity.heroSummary,
+    heroSummary:
+      positionSummary ??
+      profileRow?.hero_summary ??
+      fallbackUniversity.heroSummary,
+    strengths:
+      profileChips.strengths.length > 0
+        ? profileChips.strengths
+        : fallbackUniversity.strengths,
+    environment:
+      profileChips.environment.length > 0
+        ? profileChips.environment
+        : fallbackUniversity.environment,
+    bestFit:
+      profileChips.bestFit.length > 0
+        ? profileChips.bestFit
+        : fallbackUniversity.bestFit,
     overview:
       (locale === "zh"
         ? profileRow?.overview_zh
@@ -228,4 +299,82 @@ export async function getUniversityDetailPageData(
       classificationRows.some((classification) => classification.code === code),
     ),
   };
+}
+
+function buildPreviewUniversityDetailPageData(
+  previewUniversity: UniversityPreview,
+  positionSummary: string | null,
+  profileChips: {
+    strengths: string[];
+    environment: string[];
+    bestFit: string[];
+  },
+): UniversityDetailPageData {
+  return {
+    university: {
+      ...previewUniversity,
+      heroSummary: positionSummary ?? previewUniversity.heroSummary,
+      strengths:
+        profileChips.strengths.length > 0
+          ? profileChips.strengths
+          : previewUniversity.strengths,
+      environment:
+        profileChips.environment.length > 0
+          ? profileChips.environment
+          : previewUniversity.environment,
+      bestFit:
+        profileChips.bestFit.length > 0
+          ? profileChips.bestFit
+          : previewUniversity.bestFit,
+    },
+    rankings: previewUniversity.rankings.map((ranking) => ({
+      ...ranking,
+      sourceUrl: null,
+    })),
+    classifications: classificationDisplayOrder.filter((code) =>
+      previewUniversity.tags.includes(code),
+    ),
+  };
+}
+
+function getPositioningSummary(slug: string, locale: Locale) {
+  const matchedSlug = positionSummarySlugAliases[slug] ?? slug;
+  const entry = (
+    positionSummaryData.universities as PositionSummaryEntry[]
+  ).find((item) => item.slug === matchedSlug);
+
+  if (!entry?.positioning_summary) {
+    return null;
+  }
+
+  return locale === "zh"
+    ? entry.positioning_summary.zh ?? entry.positioning_summary.en ?? null
+    : entry.positioning_summary.en ?? entry.positioning_summary.zh ?? null;
+}
+
+function getStrengthEnvironmentBestFit(slug: string, locale: Locale) {
+  const matchedSlug = strengthEnvironmentBestFitSlugAliases[slug] ?? slug;
+  const entry = (
+    strengthEnvironmentBestFitData.universities as StrengthEnvironmentBestFitEntry[]
+  ).find(
+    (item) => item.slug === matchedSlug,
+  );
+
+  return {
+    strengths: getLocalizedList(entry?.strengths, locale),
+    environment: getLocalizedList(entry?.environment, locale),
+    bestFit: getLocalizedList(entry?.best_fit, locale),
+  };
+}
+
+function getLocalizedList(
+  value: { en?: string[]; zh?: string[] } | undefined,
+  locale: Locale,
+) {
+  const localized =
+    locale === "zh"
+      ? value?.zh ?? value?.en
+      : value?.en ?? value?.zh;
+
+  return localized ?? [];
 }

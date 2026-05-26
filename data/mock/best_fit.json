@@ -1,0 +1,195 @@
+{
+  "schema_version": "1.0",
+  "type": "best_fit_profiles",
+  "universities": [
+    {
+      "slug": "tsinghua-university",
+      "name_en": "Tsinghua University",
+      "name_zh": "清华大学",
+      "best_fit": {
+        "en": [
+          "Students seeking elite engineering and technology education",
+          "Applicants targeting top global research opportunities",
+          "Highly competitive and academically ambitious students",
+          "Future leaders in AI, engineering, policy, and innovation",
+          "Students comfortable with intense academic pressure"
+        ],
+        "zh": [
+          "希望接受顶尖工程与科技教育的学生",
+          "目标进入全球顶级科研体系的申请者",
+          "学术竞争力极强且目标明确的学生",
+          "未来希望进入 AI、工程、政策或创新领域的学生",
+          "能够适应高强度学术压力的学生"
+        ]
+      }
+    },
+    {
+      "slug": "peking-university",
+      "name_en": "Peking University",
+      "name_zh": "北京大学",
+      "best_fit": {
+        "en": [
+          "Students seeking a broad and prestigious academic environment",
+          "Applicants interested in humanities, social sciences, and policy",
+          "Students valuing intellectual culture and interdisciplinary study",
+          "Future researchers, scholars, and public-sector leaders",
+          "Students wanting strong overall academic flexibility"
+        ],
+        "zh": [
+          "希望进入顶尖综合学术环境的学生",
+          "对人文、社科与政策研究感兴趣的申请者",
+          "重视思想氛围与跨学科学习的学生",
+          "未来希望从事科研、学术或公共事务的学生",
+          "希望拥有广泛学术选择空间的学生"
+        ]
+      }
+    },
+    {
+      "slug": "fudan-university",
+      "name_en": "Fudan University",
+      "name_zh": "复旦大学",
+      "best_fit": {
+        "en": [
+          "Students seeking a balance between academics and international exposure",
+          "Applicants interested in studying in Shanghai",
+          "Students valuing urban lifestyle and global connectivity",
+          "Future professionals in business, media, finance, and international fields",
+          "Students wanting a more internationalized campus atmosphere"
+        ],
+        "zh": [
+          "希望平衡学术与国际化体验的学生",
+          "希望在上海学习生活的申请者",
+          "重视国际城市资源与现代生活方式的学生",
+          "未来计划进入金融、商业、媒体或国际领域的学生",
+          "希望体验更国际化校园环境的学生"
+        ]
+      }
+    },
+    {
+      "slug": "shanghai-jiao-tong-university",
+      "name_en": "Shanghai Jiao Tong University",
+      "name_zh": "上海交通大学",
+      "best_fit": {
+        "en": [
+          "Students focused on engineering, technology, and applied research",
+          "Applicants seeking strong industry connections",
+          "Students interested in innovation and large-scale research projects",
+          "Future engineers and technical professionals",
+          "Students wanting strong career-oriented technical education"
+        ],
+        "zh": [
+          "专注于工科、科技与应用研究的学生",
+          "希望获得强产业资源连接的申请者",
+          "对大型科研项目与技术创新感兴趣的学生",
+          "未来计划成为工程师或技术人才的学生",
+          "希望获得就业导向型技术教育的学生"
+        ]
+      }
+    },
+    {
+      "slug": "zhejiang-university",
+      "name_en": "Zhejiang University",
+      "name_zh": "浙江大学",
+      "best_fit": {
+        "en": [
+          "Students interested in entrepreneurship and innovation",
+          "Applicants drawn to China’s private tech ecosystem",
+          "Students combining engineering with startup ambitions",
+          "Future founders, product builders, and tech innovators",
+          "Students seeking a fast-moving and ambitious environment"
+        ],
+        "zh": [
+          "对创业与创新感兴趣的学生",
+          "希望接触中国民营科技产业生态的申请者",
+          "希望结合工科与创业发展的学生",
+          "未来希望成为创业者或科技创新者的学生",
+          "喜欢快速发展和高活力环境的学生"
+        ]
+      }
+    },
+    {
+      "slug": "nanjing-university",
+      "name_en": "Nanjing University",
+      "name_zh": "南京大学",
+      "best_fit": {
+        "en": [
+          "Students valuing academic depth and traditional scholarship",
+          "Applicants interested in fundamental sciences and research",
+          "Students preferring a quieter and more research-focused culture",
+          "Future academics and theoretical researchers",
+          "Students less interested in aggressive commercialization"
+        ],
+        "zh": [
+          "重视学术深度与传统学术氛围的学生",
+          "对基础科学与研究感兴趣的申请者",
+          "偏好安静科研环境的学生",
+          "未来计划从事理论研究或学术工作的学生",
+          "不喜欢过度商业化校园氛围的学生"
+        ]
+      }
+    },
+    {
+      "slug": "university-of-science-and-technology-of-china",
+      "name_en": "University of Science and Technology of China",
+      "name_zh": "中国科学技术大学",
+      "best_fit": {
+        "en": [
+          "Highly academic students focused on science and research",
+          "Applicants seeking elite scientific training",
+          "Students interested in physics, mathematics, AI, and advanced sciences",
+          "Future PhD candidates and researchers",
+          "Students comfortable with intensive academic rigor"
+        ],
+        "zh": [
+          "高度偏学术与科研导向的学生",
+          "希望接受精英科学训练的申请者",
+          "对物理、数学、AI 与前沿科学感兴趣的学生",
+          "未来计划攻读博士或从事科研的学生",
+          "能够适应高强度学术训练的学生"
+        ]
+      }
+    },
+    {
+      "slug": "harbin-institute-of-technology",
+      "name_en": "Harbin Institute of Technology",
+      "name_zh": "哈尔滨工业大学",
+      "best_fit": {
+        "en": [
+          "Students seeking serious engineering training",
+          "Applicants interested in aerospace, robotics, and advanced manufacturing",
+          "Students valuing technical depth over campus glamour",
+          "Applicants looking for strong value outside first-tier cities",
+          "Students comfortable with colder northern-city environments"
+        ],
+        "zh": [
+          "希望接受扎实硬核工科训练的学生",
+          "对航空航天、机器人与先进制造感兴趣的申请者",
+          "更重视技术实力而非校园光鲜感的学生",
+          "希望获得高性价比顶尖工科教育的学生",
+          "能够适应北方寒冷城市环境的学生"
+        ]
+      }
+    },
+    {
+      "slug": "xian-jiaotong-university",
+      "name_en": "Xi’an Jiaotong University",
+      "name_zh": "西安交通大学",
+      "best_fit": {
+        "en": [
+          "Students seeking strong traditional engineering education",
+          "Applicants interested in research and national strategic industries",
+          "Students valuing academic stability and technical foundations",
+          "Future engineers in energy, manufacturing, and infrastructure",
+          "Students interested in western China’s academic environment"
+        ],
+        "zh": [
+          "希望获得传统强工科教育的学生",
+          "对科研与国家战略产业感兴趣的申请者",
+          "重视学术稳定性与技术基础的学生",
+          "未来计划进入能源、制造或基础设施行业的学生",
+          "对中国西部学术环境感兴趣的学生"
+        ]
+      }
+    }
+  ]
+}

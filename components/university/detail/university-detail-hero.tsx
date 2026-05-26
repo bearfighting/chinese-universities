@@ -5,14 +5,15 @@ import { usePathname } from "next/navigation";
 
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import {
-  Card,
-  CardContent,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
-import { getDictionary } from "@/lib/i18n/dictionaries";
+  Tabs,
+  TabsContent,
+  TabsList,
+  TabsTrigger,
+} from "@/components/ui/tabs";
 import { getLocaleFromPathname } from "@/lib/i18n/config";
+import { getDictionary } from "@/lib/i18n/dictionaries";
 import type { UniversityPreview } from "@/lib/university-preview-data";
 import type { UniversityRankingView } from "@/lib/university-rankings";
 
@@ -56,27 +57,20 @@ export default function UniversityDetailHero({
   const motto = locale === "zh" ? university.mottoZh : university.mottoEn;
   const displayName =
     locale === "zh" ? university.chineseName : university.englishName;
+  const rankingTitle = locale === "zh" ? "\u6392\u540d" : "Ranking";
+  const strengthsTitle = locale === "zh" ? "\u4f18\u52bf" : "Strengths";
+  const environmentTitle = locale === "zh" ? "\u6c1b\u56f4" : "Environment";
+  const bestFitTitle = locale === "zh" ? "\u9002\u5408\u8c01" : "Best For";
 
   return (
-    <section className="relative overflow-hidden border-b bg-[linear-gradient(135deg,rgba(17,24,39,0.98),rgba(31,41,55,0.94)_45%,rgba(120,53,15,0.86))] text-white">
-      {heroImagePath ? (
-        <div className="absolute inset-0">
-          <Image
-            src={heroImagePath}
-            alt={`${university.englishName} campus view`}
-            fill
-            priority
-            className="object-cover opacity-26"
-          />
-        </div>
-      ) : null}
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(255,255,255,0.12),transparent_32%),radial-gradient(circle_at_bottom_right,rgba(245,158,11,0.18),transparent_28%)]" />
-      <div className="absolute inset-0 bg-[linear-gradient(115deg,rgba(15,23,42,0.92),rgba(15,23,42,0.78)_42%,rgba(30,41,59,0.72)_62%,rgba(120,53,15,0.78))]" />
+    <section className="relative overflow-hidden border-b border-border/60 bg-[linear-gradient(180deg,#f8fafc_0%,#eef2ff_52%,#f8fafc_100%)] text-slate-950">
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(59,130,246,0.14),transparent_28%),radial-gradient(circle_at_top_right,rgba(249,115,22,0.10),transparent_24%),radial-gradient(circle_at_bottom,rgba(15,23,42,0.05),transparent_34%)]" />
+
       <div className="relative mx-auto flex w-full max-w-6xl flex-col gap-10 px-6 py-14 sm:px-10 lg:px-12">
         <div className="flex flex-col gap-8 lg:flex-row lg:items-start lg:justify-between">
           <div className="max-w-3xl space-y-5">
             <div className="flex items-center gap-4">
-              <div className="flex size-18 shrink-0 items-center justify-center rounded-3xl border border-white/12 bg-white/92 p-3 shadow-lg shadow-black/10">
+              <div className="flex size-18 shrink-0 items-center justify-center rounded-3xl border border-slate-200/80 bg-white p-3 shadow-lg shadow-slate-900/5">
                 <Image
                   src={getUniversityLogoPath(university.slug)}
                   alt={`${university.englishName} logo`}
@@ -90,8 +84,8 @@ export default function UniversityDetailHero({
                   <p
                     className={
                       locale === "zh"
-                        ? "text-sm font-medium tracking-[0.08em] text-white/88"
-                        : "text-sm italic text-white/68"
+                        ? "text-sm font-medium tracking-[0.08em] text-slate-700"
+                        : "text-sm italic text-slate-500"
                     }
                   >
                     {motto}
@@ -105,7 +99,7 @@ export default function UniversityDetailHero({
                 <Badge
                   key={tag}
                   variant="secondary"
-                  className="rounded-full border-white/15 bg-white/10 px-3 py-1 text-white"
+                  className="rounded-full border-slate-200 bg-white/90 px-3 py-1 text-slate-700"
                 >
                   {tag}
                 </Badge>
@@ -116,7 +110,7 @@ export default function UniversityDetailHero({
               <h1 className="text-4xl font-semibold tracking-tight sm:text-5xl">
                 {displayName}
               </h1>
-              <p className="max-w-2xl text-base leading-7 text-white/82 sm:text-lg">
+              <p className="max-w-2xl text-base leading-7 text-slate-600 sm:text-lg">
                 {university.heroSummary}
               </p>
             </div>
@@ -149,7 +143,7 @@ export default function UniversityDetailHero({
           </div>
 
           <div className="w-full max-w-md space-y-4">
-            <div className="overflow-hidden rounded-[2rem] border border-white/12 bg-white/6 shadow-2xl backdrop-blur-sm">
+            <div className="overflow-hidden rounded-[2rem] border border-slate-200/80 bg-white shadow-[0_24px_80px_-40px_rgba(15,23,42,0.35)]">
               {heroImagePath ? (
                 <div className="relative h-64">
                   <Image
@@ -158,20 +152,18 @@ export default function UniversityDetailHero({
                     fill
                     className="object-cover"
                   />
-                  <div className="absolute inset-0 bg-[linear-gradient(180deg,transparent,rgba(15,23,42,0.12)_60%,rgba(15,23,42,0.68))]" />
-                  <div className="absolute inset-x-0 bottom-0 flex items-end justify-between gap-4 p-5">
-                    <div>
-                      <p className="text-sm font-medium text-white/70">
-                        {copy.campusView}
-                      </p>
-                      <p className="mt-1 text-lg font-semibold text-white">
-                        {university.city}
-                      </p>
-                    </div>
+                  <div className="absolute inset-0 bg-[linear-gradient(180deg,transparent,rgba(15,23,42,0.06)_58%,rgba(15,23,42,0.58))]" />
+                  <div className="absolute inset-x-0 bottom-0 p-5">
+                    <p className="text-sm font-medium text-white/78">
+                      {copy.campusView}
+                    </p>
+                    <p className="mt-1 text-lg font-semibold text-white">
+                      {university.city}
+                    </p>
                   </div>
                 </div>
               ) : (
-                <div className="flex h-64 items-center justify-center bg-[radial-gradient(circle_at_center,rgba(255,255,255,0.12),transparent_60%),linear-gradient(135deg,rgba(255,255,255,0.08),rgba(255,255,255,0.02))] p-6">
+                <div className="flex h-64 items-center justify-center bg-[radial-gradient(circle_at_center,rgba(59,130,246,0.10),transparent_60%),linear-gradient(135deg,rgba(255,255,255,0.95),rgba(241,245,249,0.92))] p-6">
                   <Image
                     src={getUniversityLogoPath(university.slug)}
                     alt={`${university.englishName} logo`}
@@ -183,33 +175,40 @@ export default function UniversityDetailHero({
               )}
             </div>
 
-            <Card className="border-white/10 bg-white/6 text-white shadow-2xl backdrop-blur-sm">
+            <Card className="border-slate-200/80 bg-white/90 text-slate-950 shadow-[0_18px_60px_-36px_rgba(15,23,42,0.28)] backdrop-blur-sm">
               <CardHeader className="gap-2">
-                <CardTitle className="text-white">{copy.rankingSnapshot}</CardTitle>
+                <CardTitle className="text-slate-950">{rankingTitle}</CardTitle>
               </CardHeader>
-              <CardContent className="grid gap-3">
-                {rankings.map((ranking) => (
-                  <div
-                    key={`${ranking.system}-${ranking.year}`}
-                    className="rounded-3xl border border-white/10 bg-black/14 p-4"
-                  >
-                    <div className="flex items-start justify-between gap-4">
-                      <div>
-                        <p className="text-sm font-medium text-white/70">
-                          {ranking.system} {ranking.year}
-                        </p>
-                        <p className="mt-1 text-sm text-white/60">
-                          {ranking.label}
-                        </p>
-                      </div>
-                      <p className="text-3xl font-semibold tracking-tight">
+              <CardContent className="pt-0">
+                {rankings.map((ranking, index) => (
+                  <div key={`${ranking.system}-${ranking.year}`}>
+                    <div className="flex items-center gap-4 py-3">
+                      <p className="min-w-0 flex-1 text-sm text-slate-600">
+                        <span className="font-semibold text-slate-800">
+                          {ranking.system}
+                        </span>{" "}
+                        <span>{getRankingSuffixLabel(ranking)}</span>
+                      </p>
+                      <p className="shrink-0 text-sm font-semibold leading-none text-slate-950 tabular-nums">
                         {ranking.rank}
                       </p>
                     </div>
+                    {index < rankings.length - 1 ? (
+                      <div className="h-px bg-slate-200/80" />
+                    ) : null}
                   </div>
                 ))}
               </CardContent>
             </Card>
+
+            <HeroTabbedCard
+              bestFitItems={university.bestFit}
+              bestFitTitle={bestFitTitle}
+              environmentItems={university.environment}
+              environmentTitle={environmentTitle}
+              strengthsItems={university.strengths}
+              strengthsTitle={strengthsTitle}
+            />
           </div>
         </div>
       </div>
@@ -219,9 +218,129 @@ export default function UniversityDetailHero({
 
 function HeroFact({ label, value }: { label: string; value: string }) {
   return (
-    <div className="rounded-3xl border border-white/10 bg-white/6 px-4 py-4 transition-all duration-200 hover:-translate-y-0.5 hover:border-white/20 hover:bg-white/10">
-      <p className="text-xs uppercase tracking-[0.2em] text-white/55">{label}</p>
-      <p className="mt-2 text-sm font-medium leading-6 text-white">{value}</p>
+    <div className="rounded-3xl border border-slate-200/80 bg-white/78 px-4 py-4 transition-all duration-200 hover:-translate-y-0.5 hover:border-slate-300 hover:bg-white">
+      <p className="text-xs uppercase tracking-[0.2em] text-slate-500">{label}</p>
+      <p className="mt-2 text-sm font-medium leading-6 text-slate-950">{value}</p>
     </div>
   );
+}
+
+function HeroListCard({
+  title,
+  items,
+}: {
+  title: string;
+  items: string[];
+}) {
+  if (items.length === 0) {
+    return null;
+  }
+
+  return (
+    <Card className="border-white/10 bg-white/6 text-white shadow-2xl backdrop-blur-sm">
+      <CardHeader className="gap-2">
+        <CardTitle className="text-white">{title}</CardTitle>
+      </CardHeader>
+      <CardContent className="grid gap-3">
+        {items.map((item) => (
+          <div
+            key={item}
+            className="rounded-3xl border border-white/10 bg-black/14 px-4 py-3"
+          >
+            <p className="text-sm leading-6 text-white/88">{item}</p>
+          </div>
+        ))}
+      </CardContent>
+    </Card>
+  );
+}
+
+function HeroTabbedCard({
+  bestFitItems,
+  bestFitTitle,
+  environmentItems,
+  environmentTitle,
+  strengthsItems,
+  strengthsTitle,
+}: {
+  bestFitItems: string[];
+  bestFitTitle: string;
+  environmentItems: string[];
+  environmentTitle: string;
+  strengthsItems: string[];
+  strengthsTitle: string;
+}) {
+  const panels = [
+    {
+      key: "strengths" as const,
+      title: strengthsTitle,
+      items: strengthsItems,
+      variant: "tags" as const,
+    },
+    {
+      key: "environment" as const,
+      title: environmentTitle,
+      items: environmentItems,
+      variant: "tags" as const,
+    },
+    {
+      key: "bestFit" as const,
+      title: bestFitTitle,
+      items: bestFitItems,
+      variant: "tags" as const,
+    },
+  ].filter((panel) => panel.items.length > 0);
+
+  if (panels.length === 0) {
+    return null;
+  }
+
+  const defaultValue = panels[0]?.key;
+
+  return (
+    <Card className="border-slate-200/80 bg-white/90 text-slate-950 shadow-[0_18px_60px_-36px_rgba(15,23,42,0.28)] backdrop-blur-sm">
+      <CardContent className="pt-6">
+        <Tabs defaultValue={defaultValue} className="gap-5">
+          <TabsList>
+            {panels.map((panel) => (
+              <TabsTrigger key={panel.key} value={panel.key}>
+                {panel.title}
+              </TabsTrigger>
+            ))}
+          </TabsList>
+          {panels.map((panel) => (
+            <TabsContent key={panel.key} value={panel.key}>
+              <p className="text-sm leading-7 text-slate-700">
+                {panel.items.map((item, index) => (
+                  <span key={item}>
+                    {index > 0 ? (
+                      <span
+                        aria-hidden="true"
+                        className="mx-2 inline-block text-slate-900"
+                      >
+                        •
+                      </span>
+                    ) : null}
+                    <span>{item}</span>
+                  </span>
+                ))}
+              </p>
+            </TabsContent>
+          ))}
+        </Tabs>
+      </CardContent>
+    </Card>
+  );
+}
+
+function getRankingSuffixLabel(ranking: UniversityRankingView) {
+  if (ranking.system === "QS") {
+    return "World Ranking";
+  }
+
+  if (ranking.system === "THE") {
+    return "World Ranking";
+  }
+
+  return ranking.label;
 }

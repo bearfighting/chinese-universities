@@ -1,0 +1,249 @@
+{
+  "schema_version": "1.0",
+  "description": {
+    "en": "Positioning and identity summaries for China's C9 universities.",
+    "zh": "中国C9高校的定位与学校气质总结。"
+  },
+  "levels": {
+    "hero_tagline": {
+      "description_en": "Short positioning line for hero sections.",
+      "description_zh": "用于 Hero 区域的简短定位语。"
+    },
+    "positioning_summary": {
+      "description_en": "1-2 sentence summary for overview sections and SEO.",
+      "description_zh": "用于概览、SEO 和整体介绍的中等长度总结。"
+    },
+    "deep_identity": {
+      "description_en": "Detailed identity and applicant-fit description.",
+      "description_zh": "更深入的学校气质与适合人群描述。"
+    }
+  },
+  "universities": [
+    {
+      "slug": "tsinghua-university",
+      "name_en": "Tsinghua University",
+      "name_zh": "清华大学",
+      "classifications": ["C9", "985", "211", "Double First Class"],
+      "identity_traits": [
+        "engineering",
+        "technology",
+        "elite",
+        "innovation",
+        "competitive",
+        "global"
+      ],
+      "hero_tagline": {
+        "en": "China’s leading engineering and technology university.",
+        "zh": "中国顶尖的工程与科技大学。"
+      },
+      "positioning_summary": {
+        "en": "China’s most prestigious engineering and technology university, increasingly global and deeply tied to China’s future innovation ecosystem.",
+        "zh": "中国最具影响力的工程与科技大学，全球化程度极高，并深度参与中国未来科技创新体系。"
+      },
+      "deep_identity": {
+        "en": "Best for students seeking elite technical education, top-tier research resources, and access to China’s most influential innovation networks.",
+        "zh": "适合希望获得顶尖工程教育、强大科研资源以及接触中国核心科技创新生态的学生。"
+      }
+    },
+    {
+      "slug": "peking-university",
+      "name_en": "Peking University",
+      "name_zh": "北京大学",
+      "classifications": ["C9", "985", "211", "Double First Class"],
+      "identity_traits": [
+        "comprehensive",
+        "academic",
+        "humanities",
+        "intellectual",
+        "prestigious"
+      ],
+      "hero_tagline": {
+        "en": "China’s premier comprehensive university.",
+        "zh": "中国顶尖综合性大学。"
+      },
+      "positioning_summary": {
+        "en": "China’s leading comprehensive university, known for academic prestige, intellectual culture, and strength across humanities, sciences, and policy.",
+        "zh": "中国最具学术声望的综合性大学，以人文传统、学术自由氛围和跨学科实力著称。"
+      },
+      "deep_identity": {
+        "en": "Best for students seeking strong academics across disciplines, intellectual culture, and close proximity to China’s academic and policy centers.",
+        "zh": "适合追求跨学科顶尖学术、人文氛围以及接近中国学术与政策中心的学生。"
+      }
+    },
+    {
+      "slug": "fudan-university",
+      "name_en": "Fudan University",
+      "name_zh": "复旦大学",
+      "classifications": ["C9", "985", "211", "Double First Class"],
+      "identity_traits": [
+        "international",
+        "urban",
+        "comprehensive",
+        "modern",
+        "global"
+      ],
+      "hero_tagline": {
+        "en": "Elite Shanghai university with a global outlook.",
+        "zh": "具有全球视野的上海顶尖大学。"
+      },
+      "positioning_summary": {
+        "en": "An elite Shanghai university balancing strong academics, international openness, and one of China’s most globally connected urban environments.",
+        "zh": "位于上海的顶尖综合大学，在学术实力、国际化与城市资源之间取得了极佳平衡。"
+      },
+      "deep_identity": {
+        "en": "Best for students seeking an internationally connected environment, strong academics, and access to Shanghai’s global business and cultural ecosystem.",
+        "zh": "适合希望获得国际化学习环境、优质学术资源以及上海全球化城市机会的学生。"
+      }
+    },
+    {
+      "slug": "shanghai-jiao-tong-university",
+      "name_en": "Shanghai Jiao Tong University",
+      "name_zh": "上海交通大学",
+      "classifications": ["C9", "985", "211", "Double First Class"],
+      "identity_traits": [
+        "engineering",
+        "industry",
+        "research",
+        "technology",
+        "modern"
+      ],
+      "hero_tagline": {
+        "en": "One of China’s strongest engineering universities.",
+        "zh": "中国最强工科大学之一。"
+      },
+      "positioning_summary": {
+        "en": "One of China’s strongest engineering and research universities, with powerful industry ties and a rapidly growing global reputation.",
+        "zh": "中国最强工科与科研大学之一，产业联系紧密，国际影响力增长迅速。"
+      },
+      "deep_identity": {
+        "en": "Best for students seeking high-level engineering education, strong research infrastructure, and direct links to major industries and technology sectors.",
+        "zh": "适合追求高水平工科教育、强大科研平台以及产业资源连接的学生。"
+      }
+    },
+    {
+      "slug": "zhejiang-university",
+      "name_en": "Zhejiang University",
+      "name_zh": "浙江大学",
+      "classifications": ["C9", "985", "211", "Double First Class"],
+      "identity_traits": [
+        "innovation",
+        "entrepreneurship",
+        "technology",
+        "engineering",
+        "ambitious"
+      ],
+      "hero_tagline": {
+        "en": "Innovation-driven university tied to China’s tech economy.",
+        "zh": "与中国科技产业紧密结合的创新型大学。"
+      },
+      "positioning_summary": {
+        "en": "A highly ambitious and innovation-driven university known for engineering, entrepreneurship, and deep connections to China’s private tech economy.",
+        "zh": "一所以创新和创业氛围著称的顶尖大学，与中国民营科技产业联系紧密。"
+      },
+      "deep_identity": {
+        "en": "Best for students interested in technology, startups, applied innovation, and connections to China’s fast-growing private sector.",
+        "zh": "适合对科技、创业、产业创新以及中国民营经济生态感兴趣的学生。"
+      }
+    },
+    {
+      "slug": "nanjing-university",
+      "name_en": "Nanjing University",
+      "name_zh": "南京大学",
+      "classifications": ["C9", "985", "211", "Double First Class"],
+      "identity_traits": [
+        "academic",
+        "research",
+        "fundamental-science",
+        "traditional",
+        "quiet"
+      ],
+      "hero_tagline": {
+        "en": "A research-focused university with deep academic tradition.",
+        "zh": "具有深厚学术传统的研究型大学。"
+      },
+      "positioning_summary": {
+        "en": "A historically respected academic university emphasizing fundamental sciences, intellectual depth, and a quieter research-oriented culture.",
+        "zh": "历史底蕴深厚的研究型大学，以基础学科、学术深度和低调的科研氛围著称。"
+      },
+      "deep_identity": {
+        "en": "Best for students who value academic rigor, fundamental sciences, and a calmer research-centered environment over aggressive commercialization.",
+        "zh": "适合重视学术严谨、基础研究以及安静科研氛围的学生。"
+      }
+    },
+    {
+      "slug": "university-of-science-and-technology-of-china",
+      "name_en": "University of Science and Technology of China",
+      "name_zh": "中国科学技术大学",
+      "classifications": ["C9", "985", "211", "Double First Class"],
+      "identity_traits": [
+        "science",
+        "research",
+        "elite-training",
+        "physics",
+        "intensive"
+      ],
+      "hero_tagline": {
+        "en": "China’s most research-intensive science university.",
+        "zh": "中国最偏科研导向的理科大学。"
+      },
+      "positioning_summary": {
+        "en": "China’s most research-intensive science university, focused on elite scientific training and advanced theoretical research.",
+        "zh": "中国最偏科研导向的顶尖理科大学，以精英化科学培养和高强度研究著称。"
+      },
+      "deep_identity": {
+        "en": "Best for highly academic students seeking advanced scientific training, theoretical depth, and intensive research opportunities.",
+        "zh": "适合追求高强度科研训练、理论深度与精英科学教育的学生。"
+      }
+    },
+    {
+      "slug": "harbin-institute-of-technology",
+      "name_en": "Harbin Institute of Technology",
+      "name_zh": "哈尔滨工业大学",
+      "classifications": ["C9", "985", "211", "Double First Class"],
+      "identity_traits": [
+        "hardcore-engineering",
+        "aerospace",
+        "robotics",
+        "technical",
+        "industrial"
+      ],
+      "hero_tagline": {
+        "en": "Elite engineering university with strong aerospace reputation.",
+        "zh": "以航空航天见长的顶尖工程大学。"
+      },
+      "positioning_summary": {
+        "en": "An elite engineering university known for aerospace, robotics, and serious technical training, with a distinctive northern industrial identity.",
+        "zh": "以航空航天、机器人和硬核工科训练著称的顶尖工程大学，具有鲜明的北方工业气质。"
+      },
+      "deep_identity": {
+        "en": "Best for students seeking strong engineering training, research depth, and high-value technical education outside China’s first-tier cities.",
+        "zh": "适合希望获得扎实工科训练、科研深度以及高性价比技术教育的学生。"
+      }
+    },
+    {
+      "slug": "xian-jiaotong-university",
+      "name_en": "Xi’an Jiaotong University",
+      "name_zh": "西安交通大学",
+      "classifications": ["C9", "985", "211", "Double First Class"],
+      "identity_traits": [
+        "engineering",
+        "traditional",
+        "research",
+        "national-strategy",
+        "western-china"
+      ],
+      "hero_tagline": {
+        "en": "A major engineering university with deep national importance.",
+        "zh": "具有国家战略地位的重要工科大学。"
+      },
+      "positioning_summary": {
+        "en": "A major research university with deep engineering roots, strong national importance, and a traditional academic culture in western China.",
+        "zh": "具有深厚工科传统和国家战略地位的重要研究型大学，代表着中国西部顶尖高教实力。"
+      },
+      "deep_identity": {
+        "en": "Best for students seeking strong engineering education, traditional academic culture, and access to one of western China’s leading research hubs.",
+        "zh": "适合希望获得传统工科教育、研究型环境以及西部核心高校资源的学生。"
+      }
+    }
+  ]
+}

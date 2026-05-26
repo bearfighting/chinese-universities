@@ -102,7 +102,12 @@ function buildBreadcrumbs(pathname: string, locale: Locale): Crumb[] {
 }
 
 function getSegmentLabel(segment: string, locale: Locale) {
-  const staticLabel = STATIC_SEGMENT_LABELS[segment];
+  const staticLabel =
+    segment in STATIC_SEGMENT_LABELS
+      ? STATIC_SEGMENT_LABELS[
+          segment as keyof typeof STATIC_SEGMENT_LABELS
+        ]
+      : undefined;
 
   if (staticLabel) {
     return staticLabel(locale);

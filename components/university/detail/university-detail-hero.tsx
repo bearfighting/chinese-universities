@@ -1,7 +1,6 @@
 "use client";
 
 import Image from "next/image";
-import Link from "next/link";
 import { usePathname } from "next/navigation";
 
 import { Badge } from "@/components/ui/badge";
@@ -9,7 +8,6 @@ import { Button } from "@/components/ui/button";
 import {
   Card,
   CardContent,
-  CardDescription,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
@@ -56,6 +54,8 @@ export default function UniversityDetailHero({
   const copy = getDictionary(locale).universityDetail.hero;
   const heroImagePath = getUniversityHeroImagePath(university.slug);
   const motto = locale === "zh" ? university.mottoZh : university.mottoEn;
+  const displayName =
+    locale === "zh" ? university.chineseName : university.englishName;
 
   return (
     <section className="relative overflow-hidden border-b bg-[linear-gradient(135deg,rgba(17,24,39,0.98),rgba(31,41,55,0.94)_45%,rgba(120,53,15,0.86))] text-white">
@@ -114,9 +114,8 @@ export default function UniversityDetailHero({
 
             <div className="space-y-3">
               <h1 className="text-4xl font-semibold tracking-tight sm:text-5xl">
-                {university.englishName}
+                {displayName}
               </h1>
-              <p className="text-lg text-white/72">{university.chineseName}</p>
               <p className="max-w-2xl text-base leading-7 text-white/82 sm:text-lg">
                 {university.heroSummary}
               </p>
@@ -146,14 +145,6 @@ export default function UniversityDetailHero({
                   {copy.officialWebsite}
                 </a>
               </Button>
-              <Button
-                asChild
-                variant="outline"
-                size="lg"
-                className="border-white/20 bg-white/5 text-white hover:bg-white/10"
-              >
-                <Link href="/universities">{copy.backToUniversities}</Link>
-              </Button>
             </div>
           </div>
 
@@ -177,9 +168,6 @@ export default function UniversityDetailHero({
                         {university.city}
                       </p>
                     </div>
-                    <Badge className="rounded-full border-white/12 bg-white/12 text-white">
-                      {classifications[0] ?? copy.featured}
-                    </Badge>
                   </div>
                 </div>
               ) : (
@@ -198,9 +186,6 @@ export default function UniversityDetailHero({
             <Card className="border-white/10 bg-white/6 text-white shadow-2xl backdrop-blur-sm">
               <CardHeader className="gap-2">
                 <CardTitle className="text-white">{copy.rankingSnapshot}</CardTitle>
-                <CardDescription className="text-white/70">
-                  {copy.rankingDescription}
-                </CardDescription>
               </CardHeader>
               <CardContent className="grid gap-3">
                 {rankings.map((ranking) => (
